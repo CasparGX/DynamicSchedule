@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorText333">#333</color>
+    <color name="colorText666">#666</color>
+    <color name="colorText999">#999</color>
+
+    <color name="colorAlpha000">#33000000</color>
+    <color name="colorAlpha999">#33999999</color>
+    <color name="colorAlphafff">#80ffffff</color>
+    <color name="colorAlphaOringe">#80fd8700</color>
+
+
+    <string-array name="colorItemCourseList">
+        <item>#FFF2C973</item>
+        <item>#FF83D3D4</item>
+        <item>#FF98D362</item>
+        <item>#FFEB9FA1</item>
+        <item>#FF74C0AD</item>
+        <item>#FFE097B5</item>
+        <item>#FF60C0E6</item>
+        <item>#FFF3AB8B</item>
+        <item>#FF93B8D7</item>
+        <item>#FF79D4A3</item>
+        <item>#FFBEA49D</item>
+    </string-array>
+</resources>

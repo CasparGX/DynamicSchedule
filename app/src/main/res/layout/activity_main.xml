@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_activity_main"
+              android:orientation="vertical"
+              tools:context="cc.xaabb.dynamicschedule.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/colorAlphaOringe">
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/include_course_header"/>
+
+    <ScrollView
+        android:id="@+id/scroll_course_allcourse"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        android:scrollbarSize="2dp"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_course_allcourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include
+                layout="@layout/include_course_left_bar"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_course_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
