@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cc.xaabb.dynamicschedule.R;
+import cc.xaabb.dynamicschedule.model.Course;
 
 
 /**
@@ -33,5 +34,10 @@ public class CourseItemView {
         TextView mTextView = (TextView) item_course.getChildAt(0);
         mTextView.setText(mCourseName+"\n@"+location+"\n"+teacher);
         return item_course;
+    }
+
+    public static LinearLayout create(Context mContext, ViewGroup layoutCourseContent, int defaultWidth, int defaultHeight, Course mCourse){
+        return create(mContext, layoutCourseContent, defaultWidth, defaultHeight,
+                    mCourse.getWeekDay(), mCourse.getSectionStart(), mCourse.getSectionEnd(), mCourse.getCourse(), mCourse.getLocation(), mCourse.getTeacher());
     }
 }

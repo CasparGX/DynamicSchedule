@@ -17,6 +17,10 @@ import java.lang.reflect.Method;
 
 public class ScreenUtils {
 
+    public static float density;
+    public static int screenWidth;
+    public static int screenHeight;
+
     private ScreenUtils() {
         throw new UnsupportedOperationException("u can't fuck me...");
     }
@@ -28,10 +32,7 @@ public class ScreenUtils {
      * @return 屏幕宽px
      */
     public static int getScreenWidth(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();// 创建了一张白纸
-        windowManager.getDefaultDisplay().getMetrics(outMetrics);// 给白纸设置宽高
-        return outMetrics.widthPixels;
+        return screenWidth;
     }
 
     /**
@@ -41,10 +42,7 @@ public class ScreenUtils {
      * @return 屏幕高px
      */
     public static int getScreenHeight(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();// 创建了一张白纸
-        windowManager.getDefaultDisplay().getMetrics(outMetrics);// 给白纸设置宽高
-        return outMetrics.heightPixels;
+        return screenHeight;
     }
 
     /**

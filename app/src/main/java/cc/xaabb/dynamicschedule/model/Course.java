@@ -25,9 +25,9 @@ public class Course {
     private String teacher;
     private int weekDay;
     private String weekString;
-    private String sectionLength;
-    private String sectionStart;
-    private String sectionEnd;
+    private int sectionLength;
+    private int sectionStart;
+    private int sectionEnd;
     private List<Integer> week;
 
     public String getCourse() {
@@ -70,27 +70,27 @@ public class Course {
         this.weekString = weekString;
     }
 
-    public String getSectionLength() {
+    public int getSectionLength() {
         return sectionLength;
     }
 
-    public void setSectionLength(String sectionLength) {
+    public void setSectionLength(int sectionLength) {
         this.sectionLength = sectionLength;
     }
 
-    public String getSectionStart() {
+    public int getSectionStart() {
         return sectionStart;
     }
 
-    public void setSectionStart(String sectionStart) {
+    public void setSectionStart(int sectionStart) {
         this.sectionStart = sectionStart;
     }
 
-    public String getSectionEnd() {
+    public int getSectionEnd() {
         return sectionEnd;
     }
 
-    public void setSectionEnd(String sectionEnd) {
+    public void setSectionEnd(int sectionEnd) {
         this.sectionEnd = sectionEnd;
     }
 
