@@ -21,7 +21,7 @@ public class CourseItemView {
                                       ViewGroup layoutCourseContent,
                                       int defaultWidth, int defaultHeight,
                                       int weekDay, int mSectionStart, int mSectionEnd,
-                                      String mCourseName, String location, String teacher) {
+                                      String mCourseName, String location, String teacher, String mWeekString) {
 
         LinearLayout item_course = (LinearLayout) ((Activity) mContext).getLayoutInflater().inflate(R.layout.item_course, layoutCourseContent, false);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) item_course.getLayoutParams();
@@ -29,15 +29,15 @@ public class CourseItemView {
         params.width = defaultWidth;
         params.topMargin = (mSectionStart - 1) * defaultHeight;
         params.leftMargin = (weekDay - 1) * defaultWidth;
-        Log.i("TAG", params.topMargin + " " + params.leftMargin);
+        Log.i("TAG", "topMargin:" + params.topMargin + " leftMargin:" + params.leftMargin + " weekday:" + weekDay + " defaultWidth:" + defaultWidth);
         item_course.setLayoutParams(params);
         TextView mTextView = (TextView) item_course.getChildAt(0);
-        mTextView.setText(mCourseName+"\n@"+location+"\n"+teacher);
+        mTextView.setText(mCourseName + "\n@" + location + "\n" + teacher + "\n" + mWeekString);
         return item_course;
     }
 
-    public static LinearLayout create(Context mContext, ViewGroup layoutCourseContent, int defaultWidth, int defaultHeight, Course mCourse){
+    public static LinearLayout create(Context mContext, ViewGroup layoutCourseContent, int defaultWidth, int defaultHeight, Course mCourse) {
         return create(mContext, layoutCourseContent, defaultWidth, defaultHeight,
-                    mCourse.getWeekDay(), mCourse.getSectionStart(), mCourse.getSectionEnd(), mCourse.getCourse(), mCourse.getLocation(), mCourse.getTeacher());
+                mCourse.getWeekDay(), mCourse.getSectionStart(), mCourse.getSectionEnd(), mCourse.getCourse(), mCourse.getLocation(), mCourse.getTeacher(), mCourse.getWeekString());
     }
 }

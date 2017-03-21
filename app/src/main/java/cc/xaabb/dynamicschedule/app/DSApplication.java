@@ -12,6 +12,12 @@ import cc.xaabb.dynamicschedule.utils.ScreenUtils;
 
 public class DSApplication extends Application {
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initData();
+    }
+
     private void initData() {
         ScreenUtils.density = getResources().getDisplayMetrics().density;
         ScreenUtils.screenHeight = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();

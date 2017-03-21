@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +17,18 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.model.Course;
+import cc.xaabb.dynamicschedule.utils.ScreenUtils;
 import cc.xaabb.dynamicschedule.utils.SizeUtils;
 import cc.xaabb.dynamicschedule.utils.TimeUtils;
 
@@ -49,6 +52,9 @@ public class CourseLayout extends FrameLayout {
     private LinearLayout layoutCourseHeader;
     private RelativeLayout layoutCourseContent;
 
+    private Integer mCurWeek = 3;
+    private List<Course> mCourseList;
+
     public CourseLayout(Context context) {
         this(context, null);
     }
@@ -64,15 +70,16 @@ public class CourseLayout extends FrameLayout {
 
         View view = LayoutInflater.from(context).inflate(R.layout.layout_course, null);
         mCourseLayout = new ViewHolder(view);
+        initData();
         initCourseLayoutView();
         initHeaderDate();
         initCourseSize();
         addView(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public CourseLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    private void initData() {
+        screenWidth = ScreenUtils.screenWidth;
+        defaultHeight = SizeUtils.dp2px(mContext.getApplicationContext(), 65);
     }
 
     private void initCourseLayoutView() {
@@ -84,29 +91,25 @@ public class CourseLayout extends FrameLayout {
             public void onClick(View v) {
                 int layoutCourseLeftWidth = layoutCourseLeft.getWidth();
                 defaultWidth = (screenWidth - layoutCourseLeftWidth) / 7;
-                String[] allColors = mResources.getStringArray(R.array.colorItemCourseList);
+                List<Course> mCourses = new ArrayList<Course>();
                 for (int i = 0; i < 7; i++) {
 
                     Course mCourse = new Course();
                     mCourse.setCourse("放牛与捡粪");
                     mCourse.setLocation("一田");
                     mCourse.setSectionStart(i + 1);
-                    mCourse.setSectionEnd(i + 2);
+                    mCourse.setSectionEnd(i + 3);
                     mCourse.setSectionLength(2);
                     mCourse.setTeacher("刘大毛");
                     List<Integer> mIntegerList = new ArrayList<Integer>();
                     mIntegerList.add(1);
-                    mIntegerList.add(2);
-                    mIntegerList.add(3);
+                    mIntegerList.add(i+1);
                     mCourse.setWeek(mIntegerList);
                     mCourse.setWeekString("1-3周");
                     mCourse.setWeekDay(i + 1);
-                    LinearLayout item_course = CourseItemView.create(mContext, layoutCourseContent, defaultWidth, defaultHeight, mCourse);
-
-                    GradientDrawable mGradientDrawable = (GradientDrawable) item_course.getBackground();
-                    mGradientDrawable.setColor(Color.parseColor(allColors[i]));
-                    layoutCourseContent.addView(item_course);
+                    mCourses.add(mCourse);
                 }
+                setCourseList(mCourses);
             }
         });
     }
@@ -115,7 +118,6 @@ public class CourseLayout extends FrameLayout {
      * 初始化课表布局
      */
     private void initCourseSize() {
-        defaultHeight = SizeUtils.dp2px(mContext.getApplicationContext(), 65);
         LinearLayout.LayoutParams mParams = (LinearLayout.LayoutParams) layoutCourseLeft.getLayoutParams();
         mParams.height = defaultHeight * 11;
     }
@@ -135,10 +137,53 @@ public class CourseLayout extends FrameLayout {
             TextView mTxtDate = (TextView) ((LinearLayout) layoutCourseHeader.getChildAt(i)).getChildAt(0);
             mTxtDate.setText(mTempDate + "");
             if (mCurDate.equals(mTempDate + "")) { // 当日
-                mTxtDate.setTextColor(mResources.getColor(R.color.colorAlphaOringe));
-                ((TextView) ((LinearLayout) mTxtDate.getParent()).getChildAt(1)).setTextColor(mResources.getColor(R.color.colorAlphaOringe));
+                mTxtDate.setTextColor(mResources.getColor(R.color.colorAlphaGreen));
+                ((TextView) ((LinearLayout) mTxtDate.getParent()).getChildAt(1)).setTextColor(mResources.getColor(R.color.colorAlphaGreen));
             }
         }
+    }
+
+    /**
+     * 设置课表
+     * 将课表内容区域的子 view 清空, 然后添加新的 CourseItemView
+     * */
+    public void setCourseList(@Nullable List<Course> mCourseList) {
+        if (mCourseList==null) {
+            mCourseList = this.mCourseList;
+        } else {
+            this.mCourseList = mCourseList;
+        }
+
+        layoutCourseContent.removeAllViews();
+
+        String[] allColors = mResources.getStringArray(R.array.colorItemCourseList);
+        List<String> mTempList =  Arrays.asList(allColors);
+        LinkedList<String> mColorList = new LinkedList<>(mTempList);
+        Map<String, String> mColorMap = new HashMap<>();
+
+        for (int i = 0; i < mCourseList.size(); i++) {
+            String color;
+            Course mCourse = mCourseList.get(i);
+            if (!mCourse.getWeek().contains(mCurWeek)) {
+                continue;
+            }
+            LinearLayout item_course = CourseItemView.create(mContext, layoutCourseContent, defaultWidth, defaultHeight, mCourse);
+
+            if (mColorMap.containsKey(mCourse.getCourse())) {
+                color = mColorMap.get(mCourse.getCourse());
+            } else {
+                color = mColorList.pop();
+            }
+
+            GradientDrawable mGradientDrawable = (GradientDrawable) item_course.getBackground();
+            mGradientDrawable.setColor(Color.parseColor(color));
+            layoutCourseContent.addView(item_course);
+        }
+    }
+
+    public void setCurWeek(Integer mCurWeek) {
+        this.mCurWeek = mCurWeek;
+        setCourseList(null);
     }
 
     static class ViewHolder{

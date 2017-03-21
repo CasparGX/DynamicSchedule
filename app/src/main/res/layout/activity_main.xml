@@ -11,16 +11,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:background="@color/colorAlphaOringe">
+        android:background="@color/colorAlphaGreen"
+        android:orientation="horizontal">
 
+        <Spinner
+            android:id="@+id/cur_week_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:clickable="true"
+            android:dropDownWidth="100dp"
+            android:foreground="@color/colorPrimary"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:overlapAnchor="false"
+            android:paddingLeft="24dp"
+            android:paddingRight="6dp"
+            android:spinnerMode="dropdown">
+        </Spinner>
     </LinearLayout>
 
     <!--<include layout="@layout/layout_course"/>-->
 
     <cc.xaabb.dynamicschedule.course.CourseLayout
         android:id="@+id/layout_course"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         />
 </LinearLayout>
