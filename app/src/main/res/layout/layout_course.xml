@@ -1,38 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-    <include
-        layout="@layout/include_course_header"/>
-
-    <ScrollView
-        android:id="@+id/scroll_course_allcourse"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="false"
-        android:scrollbarSize="2dp"
-        android:scrollbars="vertical">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layout_course_allcourse"
+        <include
+            android:id="@+id/layout_course_header"
+            layout="@layout/include_course_header"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll_course_allcourse"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:fillViewport="false"
+            android:scrollbarSize="2dp"
+            android:scrollbars="vertical">
 
-            <include
-                layout="@layout/include_course_left_bar"/>
-
-            <RelativeLayout
-                android:id="@+id/layout_course_content"
+            <LinearLayout
+                android:id="@+id/layout_course_allcourse"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include
+                    layout="@layout/include_course_left_bar"/>
+
+                <RelativeLayout
+                    android:id="@+id/layout_course_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
 
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/colorPrimaryDark"
+        fab:fab_icon="@drawable/ic_menu"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left"
+        fab:layout_anchor="@id/scroll_course_allcourse"
+        fab:layout_anchorGravity="bottom|right|end"
+        fab:layout_behavior="cc.xaabb.dynamicschedule.widget.ScrollAwareFABBehaviorDefault">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_share"
+            fab:fab_size="mini"
+            fab:fab_title="分享"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_setup"
+            fab:fab_size="mini"
+            fab:fab_title="设置"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_edit"
+            fab:fab_size="mini"
+            fab:fab_title="编辑"/>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <!--  <android.support.design.widget.FloatingActionButton
+          android:id="@+id/myFAB"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|right"
+          android:layout_margin="16dp"
+          android:src="@drawable/ic_menu"
+          app:elevation="4dp"
+          app:fabSize="normal"
+          app:layout_anchor="@id/scroll_course_allcourse"
+          app:layout_anchorGravity="bottom|right|end"
+          app:layout_behavior="cc.xaabb.dynamicschedule.widget.ScrollAwareFABBehaviorDefault"/>
+  -->
+</android.support.design.widget.CoordinatorLayout>

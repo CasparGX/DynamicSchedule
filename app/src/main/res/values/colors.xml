@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#39C5BB</color>
-    <color name="colorPrimaryDark">#30b7ae</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">#26b1a8</color>
+    <color name="colorAccent">#29dccf</color>
+    <color name="colorPrimaryAlpha">#dd01a79b</color>
 
-    <color name="colorTextWhite">#fff</color>
+    <color name="white">#fff</color>
     <color name="colorText333">#333</color>
     <color name="colorText666">#666</color>
     <color name="colorText999">#999</color>
 
     <color name="colorAlpha000">#33000000</color>
     <color name="colorAlpha999">#33999999</color>
+    <color name="colorAlphaefefef">#45efefef</color>
     <color name="colorAlphafff">#80ffffff</color>
-    <color name="colorAlphaGreen">#802da69d</color>
+    <color name="colorAlphaGreen">#39C5BB</color>
 
 
     <string-array name="colorItemCourseList">

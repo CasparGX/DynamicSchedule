@@ -11,4 +11,10 @@
 
     </style>
 
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/bg_item_fab_menu</item>
+        <item name="android:textColor">@color/colorText666</item>
+    </style>
+
+    <declare-styleable name="CustomFloatingActionButton"/>
 </resources>

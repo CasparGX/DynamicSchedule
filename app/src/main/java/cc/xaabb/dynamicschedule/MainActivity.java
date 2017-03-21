@@ -50,21 +50,21 @@ public class MainActivity extends AppCompatActivity {
     private void initHeader() {
 
         List<Course> mCourses = new ArrayList<Course>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 21; i++) {
 
             Course mCourse = new Course();
-            mCourse.setCourse("放牛与捡粪");
+            mCourse.setCourse("放牛与捡粪" + (i%7));
             mCourse.setLocation("一田");
-            mCourse.setSectionStart(i + 1);
-            mCourse.setSectionEnd(i + 3);
+            mCourse.setSectionStart(i/7 + i%7 + 1);
+            mCourse.setSectionEnd(i/7 + i%7 + 3);
             mCourse.setSectionLength(2);
             mCourse.setTeacher("刘大毛");
             List<Integer> mIntegerList = new ArrayList<Integer>();
             mIntegerList.add(1);
-            mIntegerList.add(i+1);
+            mIntegerList.add(i%7+1);
             mCourse.setWeek(mIntegerList);
             mCourse.setWeekString("1-3周");
-            mCourse.setWeekDay(i + 1);
+            mCourse.setWeekDay(i%7 + 1);
             mCourses.add(mCourse);
         }
         mLayoutCourse.setCourseList(mCourses);

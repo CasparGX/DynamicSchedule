@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -103,13 +106,13 @@ public class CourseLayout extends FrameLayout {
                     mCourse.setTeacher("刘大毛");
                     List<Integer> mIntegerList = new ArrayList<Integer>();
                     mIntegerList.add(1);
-                    mIntegerList.add(i+1);
+                    mIntegerList.add(i + 1);
                     mCourse.setWeek(mIntegerList);
                     mCourse.setWeekString("1-3周");
                     mCourse.setWeekDay(i + 1);
                     mCourses.add(mCourse);
                 }
-                setCourseList(mCourses);
+                setCourseList(null);
             }
         });
     }
@@ -146,9 +149,9 @@ public class CourseLayout extends FrameLayout {
     /**
      * 设置课表
      * 将课表内容区域的子 view 清空, 然后添加新的 CourseItemView
-     * */
+     */
     public void setCourseList(@Nullable List<Course> mCourseList) {
-        if (mCourseList==null) {
+        if (mCourseList == null) {
             mCourseList = this.mCourseList;
         } else {
             this.mCourseList = mCourseList;
@@ -157,7 +160,7 @@ public class CourseLayout extends FrameLayout {
         layoutCourseContent.removeAllViews();
 
         String[] allColors = mResources.getStringArray(R.array.colorItemCourseList);
-        List<String> mTempList =  Arrays.asList(allColors);
+        List<String> mTempList = Arrays.asList(allColors);
         LinkedList<String> mColorList = new LinkedList<>(mTempList);
         Map<String, String> mColorMap = new HashMap<>();
 
@@ -173,6 +176,7 @@ public class CourseLayout extends FrameLayout {
                 color = mColorMap.get(mCourse.getCourse());
             } else {
                 color = mColorList.pop();
+                mColorMap.put(mCourse.getCourse(), color);
             }
 
             GradientDrawable mGradientDrawable = (GradientDrawable) item_course.getBackground();
@@ -186,7 +190,7 @@ public class CourseLayout extends FrameLayout {
         setCourseList(null);
     }
 
-    static class ViewHolder{
+    static class ViewHolder {
         @Bind(R.id.layout_course_header)
         LinearLayout mLayoutCourseHeader;
         @Bind(R.id.layout_course_left)
@@ -196,10 +200,19 @@ public class CourseLayout extends FrameLayout {
         @Bind(R.id.layout_course_allcourse)
         LinearLayout mLayoutCourseAllcourse;
         @Bind(R.id.scroll_course_allcourse)
-        ScrollView mScrollCourseAllcourse;
+        NestedScrollView mScrollCourseAllcourse;
+        @Bind(R.id.fab_1)
+        FloatingActionButton mFab1;
+        @Bind(R.id.fab_2)
+        FloatingActionButton mFab2;
+        @Bind(R.id.fab_3)
+        FloatingActionButton mFab3;
+        @Bind(R.id.fab_menu)
+        FloatingActionsMenu mFabMenu;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
+
 }
