@@ -2,10 +2,13 @@ package cc.xaabb.dynamicschedule.course;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
+import android.util.ArrayMap;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,14 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +30,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.model.Course;
+import cc.xaabb.dynamicschedule.utils.ImageUtils;
 import cc.xaabb.dynamicschedule.utils.ScreenUtils;
 import cc.xaabb.dynamicschedule.utils.SizeUtils;
 import cc.xaabb.dynamicschedule.utils.TimeUtils;
+
+import static cc.xaabb.dynamicschedule.utils.ImageUtils.getBitmapByView;
 
 
 /**
@@ -161,12 +163,12 @@ public class CourseLayout extends FrameLayout {
 
         String[] allColors = mResources.getStringArray(R.array.colorItemCourseList);
         List<String> mTempList = Arrays.asList(allColors);
-        LinkedList<String> mColorList = new LinkedList<>(mTempList);
-        Map<String, String> mColorMap = new HashMap<>();
+        final LinkedList<String> mColorList = new LinkedList<>(mTempList);
+        Map<String, String> mColorMap = new ArrayMap<>();
 
         for (int i = 0; i < mCourseList.size(); i++) {
             String color;
-            Course mCourse = mCourseList.get(i);
+            final Course mCourse = mCourseList.get(i);
             if (!mCourse.getWeek().contains(mCurWeek)) {
                 continue;
             }
@@ -181,9 +183,34 @@ public class CourseLayout extends FrameLayout {
 
             GradientDrawable mGradientDrawable = (GradientDrawable) item_course.getBackground();
             mGradientDrawable.setColor(Color.parseColor(color));
+            item_course.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
+                    mBuilder.setTitle(mCourse.getCourse());
+                    String content = String.format("教师: %s \n教室: %s \n\n%s\t第%s-%s节", mCourse.getTeacher(), mCourse.getLocation(), mCourse.getWeekString(), mCourse.getSectionStart(), mCourse.getSectionEnd());
+                    mBuilder.setMessage(content);
+                    mBuilder.create().show();
+                }
+            });
             layoutCourseContent.addView(item_course);
         }
     }
+
+    /**
+     * 获取课表
+     * */
+    public List<Course> getCourseList() {
+        return this.mCourseList;
+    }
+
+    /**
+     * 获取课表截图
+     * */
+    public Bitmap getCourseScreenShot() {
+        return ImageUtils.compressImage(getBitmapByView(mCourseLayout.mScrollCourseAllcourse,mResources.getColor(R.color.colorCourseBg)));
+    }
+
 
     public void setCurWeek(Integer mCurWeek) {
         this.mCurWeek = mCurWeek;
@@ -201,15 +228,19 @@ public class CourseLayout extends FrameLayout {
         LinearLayout mLayoutCourseAllcourse;
         @Bind(R.id.scroll_course_allcourse)
         NestedScrollView mScrollCourseAllcourse;
-        @Bind(R.id.fab_1)
+        /*@Bind(R.id.fab_1)
         FloatingActionButton mFab1;
         @Bind(R.id.fab_2)
         FloatingActionButton mFab2;
         @Bind(R.id.fab_3)
         FloatingActionButton mFab3;
         @Bind(R.id.fab_menu)
-        FloatingActionsMenu mFabMenu;
+        FloatingActionsMenu mFabMenu;*/
 
+        /*@OnClick(R.id.fab_3)
+        void onClickFab3(){
+            Log.i("viewholder", "onClickFab3: ");
+        }*/
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

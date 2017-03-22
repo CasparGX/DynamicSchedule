@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          android:textColor="@color/colorText333"
+          android:textColor="@color/colorTextTitle"
           android:background="#FFFFFF"
           android:padding="10dp"
           android:singleLine="true"

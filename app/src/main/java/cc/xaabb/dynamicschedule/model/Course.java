@@ -1,12 +1,16 @@
 package cc.xaabb.dynamicschedule.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Caspar on 2017/2/3.
  */
 
-public class Course {
+public class Course implements Parcelable {
 
     /**
      * course : 面向对象程序设计 (JAVA)Ⅰ
@@ -101,4 +105,50 @@ public class Course {
     public void setWeek(List<Integer> week) {
         this.week = week;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.course);
+        dest.writeString(this.location);
+        dest.writeString(this.teacher);
+        dest.writeInt(this.weekDay);
+        dest.writeString(this.weekString);
+        dest.writeInt(this.sectionLength);
+        dest.writeInt(this.sectionStart);
+        dest.writeInt(this.sectionEnd);
+        dest.writeList(this.week);
+    }
+
+    public Course() {
+    }
+
+    protected Course(Parcel in) {
+        this.course = in.readString();
+        this.location = in.readString();
+        this.teacher = in.readString();
+        this.weekDay = in.readInt();
+        this.weekString = in.readString();
+        this.sectionLength = in.readInt();
+        this.sectionStart = in.readInt();
+        this.sectionEnd = in.readInt();
+        this.week = new ArrayList<Integer>();
+        in.readList(this.week, Integer.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {
+        @Override
+        public Course createFromParcel(Parcel source) {
+            return new Course(source);
+        }
+
+        @Override
+        public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
 }

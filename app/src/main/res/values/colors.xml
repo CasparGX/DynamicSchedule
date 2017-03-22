@@ -4,10 +4,12 @@
     <color name="colorPrimaryDark">#26b1a8</color>
     <color name="colorAccent">#29dccf</color>
     <color name="colorPrimaryAlpha">#dd01a79b</color>
+    <color name="colorPress">#efefef</color>
+    <color name="colorCourseBg">#fcddc4</color>
 
     <color name="white">#fff</color>
-    <color name="colorText333">#333</color>
-    <color name="colorText666">#666</color>
+    <color name="colorTextTitle">#333</color>
+    <color name="colorTextBody">#666</color>
     <color name="colorText999">#999</color>
 
     <color name="colorAlpha000">#33000000</color>

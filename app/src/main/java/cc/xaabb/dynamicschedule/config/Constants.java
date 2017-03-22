@@ -5,6 +5,7 @@ package cc.xaabb.dynamicschedule.config;
  */
 public class Constants {
 
+    public static final String[] WEEK_STRING_ARRAY = new String[]{"一","二","三","四","五","六","日"};
     public final class Api {
 
         public static final String URL = "http://api.sky31.com";
