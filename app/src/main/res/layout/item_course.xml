@@ -3,10 +3,13 @@
     android:id="@+id/item_course"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:padding="2dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:paddingTop="4dp"
     android:background="@drawable/bg_item_course"
     android:orientation="vertical">
     <TextView
+        android:gravity="center_horizontal"
         android:id="@+id/txt_course_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

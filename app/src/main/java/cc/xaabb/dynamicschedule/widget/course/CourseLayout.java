@@ -1,4 +1,4 @@
-package cc.xaabb.dynamicschedule.course;
+package cc.xaabb.dynamicschedule.widget.course;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,8 +35,6 @@ import cc.xaabb.dynamicschedule.utils.ImageUtils;
 import cc.xaabb.dynamicschedule.utils.ScreenUtils;
 import cc.xaabb.dynamicschedule.utils.SizeUtils;
 import cc.xaabb.dynamicschedule.utils.TimeUtils;
-
-import static cc.xaabb.dynamicschedule.utils.ImageUtils.getBitmapByView;
 
 
 /**
@@ -59,6 +58,8 @@ public class CourseLayout extends FrameLayout {
 
     private Integer mCurWeek = 3;
     private List<Course> mCourseList;
+
+    private Map<String, String> mColorMap;
 
     public CourseLayout(Context context) {
         this(context, null);
@@ -88,14 +89,24 @@ public class CourseLayout extends FrameLayout {
     }
 
     private void initCourseLayoutView() {
+
         layoutCourseLeft = mCourseLayout.mLayoutCourseLeft;
         layoutCourseHeader = mCourseLayout.mLayoutCourseHeader;
         layoutCourseContent = mCourseLayout.mLayoutCourseContent;
+
+        // 获取 layoutCourseContent 宽度
+        ViewTreeObserver vto = layoutCourseContent.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layoutCourseContent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                defaultWidth = layoutCourseContent.getWidth() / 7;
+            }
+        });
+
         layoutCourseContent.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int layoutCourseLeftWidth = layoutCourseLeft.getWidth();
-                defaultWidth = (screenWidth - layoutCourseLeftWidth) / 7;
                 List<Course> mCourses = new ArrayList<Course>();
                 for (int i = 0; i < 7; i++) {
 
@@ -164,7 +175,7 @@ public class CourseLayout extends FrameLayout {
         String[] allColors = mResources.getStringArray(R.array.colorItemCourseList);
         List<String> mTempList = Arrays.asList(allColors);
         final LinkedList<String> mColorList = new LinkedList<>(mTempList);
-        Map<String, String> mColorMap = new ArrayMap<>();
+        mColorMap = new ArrayMap<>();
 
         for (int i = 0; i < mCourseList.size(); i++) {
             String color;
@@ -208,14 +219,30 @@ public class CourseLayout extends FrameLayout {
      * 获取课表截图
      * */
     public Bitmap getCourseScreenShot() {
-        return ImageUtils.compressImage(getBitmapByView(mCourseLayout.mScrollCourseAllcourse,mResources.getColor(R.color.colorCourseBg)));
+        Bitmap mHeaderBitmap = ImageUtils.getBitmapByView(mCourseLayout.mLayoutCourseHeader, mResources.getColor(R.color.pink_fff1f1));
+        Bitmap mBitmapByScrollView = ImageUtils.getBitmapByScrollView(mCourseLayout.mScrollCourseAllcourse, mResources.getColor(R.color.colorCourseBg));
+        Bitmap mCourseBitmap = ImageUtils.mergeBitmap(mHeaderBitmap, mBitmapByScrollView);
+//        return ImageUtils.compressImage(mCourseBitmap);
+        return mCourseBitmap;
+    }
+
+    /**
+     * 获取课表对应色块 map
+     * */
+    public Map<String, String> getColorMap() {
+        return mColorMap;
     }
 
 
+    /**
+     * 设置当前周
+     * */
     public void setCurWeek(Integer mCurWeek) {
         this.mCurWeek = mCurWeek;
         setCourseList(null);
     }
+
+
 
     static class ViewHolder {
         @Bind(R.id.layout_course_header)

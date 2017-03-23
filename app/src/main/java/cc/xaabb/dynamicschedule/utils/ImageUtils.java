@@ -3,7 +3,9 @@ package cc.xaabb.dynamicschedule.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.support.v4.widget.NestedScrollView;
+import android.view.View;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,12 +22,57 @@ import java.util.Locale;
  */
 
 public class ImageUtils {
+
+    /**
+     * 上下拼接两个Bitmap
+     */
+    public static Bitmap mergeBitmap(Bitmap mBitmap1, Bitmap mBitmap2) {
+        int h = 0;
+        Bitmap mMergeBitmap = null;
+        h+=mBitmap1.getHeight();
+        h+=mBitmap2.getHeight();
+        mMergeBitmap = Bitmap.createBitmap(mBitmap1.getWidth(), h,
+                Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(mMergeBitmap);
+
+        Rect topRect = new Rect(0, 0, mBitmap1.getWidth(), mBitmap1.getHeight());
+        Rect bottomRect  = new Rect(0, 0, mBitmap2.getWidth(), mBitmap2.getHeight());
+
+        Rect bottomRectT  = new Rect(0, mBitmap1.getHeight(), mBitmap1.getWidth(), h);
+
+        canvas.drawBitmap(mBitmap1, topRect, topRect, null);
+        canvas.drawBitmap(mBitmap2, bottomRect, bottomRectT, null);
+        return mMergeBitmap;
+    }
+
+    /**
+     * 截取view的屏幕
+     *
+     * @param mView
+     * @return
+     */
+    public static Bitmap getBitmapByView(View mView, int color) {
+        int h = 0;
+        Bitmap bitmap = null;
+        // 获取scrollview实际高度
+        h += mView.getHeight();
+        //mView.setBackgroundColor(color);
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(mView.getWidth(), h,
+                Bitmap.Config.RGB_565);
+        final Canvas canvas = new Canvas(bitmap);
+
+        mView.draw(canvas);
+        return bitmap;
+    }
+
     /**
      * 截取scrollview的屏幕
+     *
      * @param scrollView
      * @return
      */
-    public static Bitmap getBitmapByView(NestedScrollView scrollView, int color) {
+    public static Bitmap getBitmapByScrollView(NestedScrollView scrollView, int color) {
         int h = 0;
         Bitmap bitmap = null;
         // 获取scrollview实际高度
@@ -43,6 +90,7 @@ public class ImageUtils {
 
     /**
      * 压缩图片
+     *
      * @param image
      * @return
      */
@@ -69,6 +117,7 @@ public class ImageUtils {
 
     /**
      * 保存到sdcard
+     *
      * @param b
      * @return
      */

@@ -8,6 +8,8 @@
     <color name="colorCourseBg">#fcddc4</color>
 
     <color name="white">#fff</color>
+    <color name="grey_ef">#efefef</color>
+    <color name="pink_fff1f1">#fff1f1</color>
     <color name="colorTextTitle">#333</color>
     <color name="colorTextBody">#666</color>
     <color name="colorText999">#999</color>
@@ -20,6 +22,19 @@
 
 
     <string-array name="colorItemCourseList">
+        <item>#A5D6A7</item>
+        <item>#90CAF9</item>
+        <item>#FFAB91</item>
+        <item>#F48FB1</item>
+        <item>#FF79D4A3</item>
+        <item>#FFBEA49D</item>
+        <item>#CE93D8</item>
+        <item>#80DEEA</item>
+        <item>#80CBC4</item>
+        <item>#FF93B8D7</item>
+        <item>#FFCC80</item>
+    </string-array>
+    <string-array name="colorItemCourseList2">
         <item>#FFF2C973</item>
         <item>#FF83D3D4</item>
         <item>#FF98D362</item>

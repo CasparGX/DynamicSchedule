@@ -7,7 +7,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -40,7 +39,6 @@ public class ScrollAwareFABBehaviorDefault  extends CoordinatorLayout.Behavior<F
     public void onNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionsMenu child,
                                final View target, final int dxConsumed, final int dyConsumed,
                                final int dxUnconsumed, final int dyUnconsumed) {
-        Log.i(TAG, "onNestedScroll: "+dyConsumed);
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
         if (dyConsumed > 0 && !this.mIsAnimatingOut && child.getVisibility() == View.VISIBLE) {
             // User scrolled down and the FAB is currently visible -> hide the FAB

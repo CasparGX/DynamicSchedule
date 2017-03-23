@@ -14,8 +14,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.model.Course;
+import cc.xaabb.dynamicschedule.model.ParcelableMap;
 
 public class CourseEditActivity extends AppCompatActivity {
 
@@ -54,8 +56,13 @@ public class CourseEditActivity extends AppCompatActivity {
 
     private void initData() {
         Intent mIntent = getIntent();
+
         mCourseList = mIntent.getParcelableArrayListExtra("courseList");
         mCourseEditListAdapter.setCourseList(mCourseList);
+
+        Bundle mBundle = mIntent.getExtras();
+        mCourseEditListAdapter.setColorMap(((ParcelableMap)mBundle.getParcelable("colorMap")).map);
+
     }
 
     @Override
@@ -64,4 +71,8 @@ public class CourseEditActivity extends AppCompatActivity {
         mTxtTitle.setText(title);
     }
 
+    @OnClick(R.id.btn_back)
+    void onClickBtnBack() {
+        finish();
+    }
 }

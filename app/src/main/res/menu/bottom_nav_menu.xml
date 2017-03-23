@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_item1"
+        android:icon="@drawable/ic_scan"
+        android:title="蹭课"/>
+    <item
+        android:id="@+id/action_item2"
+        android:icon="@drawable/ic_course"
+        android:title="课表"/>
+    <item
+        android:id="@+id/action_item3"
+        android:icon="@drawable/ic_mine"
+        android:title="我的"/>
+</menu>

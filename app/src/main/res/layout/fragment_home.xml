@@ -1,0 +1,96 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_activity_main"
+    tools:context="cc.xaabb.dynamicschedule.MainActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/activity_main"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/colorAlphaGreen"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/cur_week_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:clickable="true"
+                android:dropDownWidth="100dp"
+                android:foreground="@color/colorPrimary"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:overlapAnchor="false"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:spinnerMode="dropdown">
+            </Spinner>
+        </RelativeLayout>
+
+        <!--<include layout="@layout/layout_course"/>-->
+
+        <cc.xaabb.dynamicschedule.widget.course.CourseLayout
+            android:id="@+id/layout_course"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:elevation="40dp"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/colorPrimaryDark"
+        fab:fab_icon="@drawable/ic_menu"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left"
+        fab:layout_anchorGravity="bottom|right|end"
+        fab:layout_behavior="cc.xaabb.dynamicschedule.widget.ScrollAwareFABBehaviorDefault">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_share"
+            fab:fab_size="mini"
+            fab:fab_title="分享"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_setup"
+            fab:fab_size="mini"
+            fab:fab_title="设置"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_edit"
+            fab:fab_size="mini"
+            fab:fab_title="编辑"/>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</android.support.design.widget.CoordinatorLayout>
+

@@ -2,8 +2,10 @@ package cc.xaabb.dynamicschedule.module.course_edit;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,10 +29,14 @@ import static cc.xaabb.dynamicschedule.config.Constants.WEEK_STRING_ARRAY;
  */
 
 public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-    private ArrayList<Course> mCourseList = new ArrayList<>();
+
     private Context mContext;
     private Resources mResources;
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
+
+    private ArrayList<Course> mCourseList = new ArrayList<>();
+
+    private Map<String, String> mColorMap = new ArrayMap<>();
 
     public CourseEditListAdapter(Context mContext) {
         this.mContext = mContext;
@@ -55,11 +62,11 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         for (int i = 0; i < mWeek.size(); i++) {
             if(mWeek.get(i)<10) {
                 TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek1To10.getChildAt(mWeek.get(i) - 1);
-                mTxtWeekItem.setBackgroundColor(mResources.getColor(R.color.colorPrimary));
+                mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
                 mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
             } else {
                 TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek11To20.getChildAt(mWeek.get(i) - 1);
-                mTxtWeekItem.setBackgroundColor(mResources.getColor(R.color.colorPrimary));
+                mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
                 mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
             }
         }
@@ -75,6 +82,10 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void setCourseList(List<Course> mCourseList) {
         this.mCourseList = (ArrayList<Course>) mCourseList;
+    }
+
+    public void setColorMap(Map<String, String> mColorMap) {
+        this.mColorMap = mColorMap;
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {

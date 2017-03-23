@@ -1,4 +1,4 @@
-package cc.xaabb.dynamicschedule.course;
+package cc.xaabb.dynamicschedule.widget.course;
 
 import android.app.Activity;
 import android.content.Context;
