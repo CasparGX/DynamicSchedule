@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SearchFragment mSearchFragment;
     private HomeFragment mHomeFragment;
-    private LoginFragment mLoginFragment;
+    private Fragment mMeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
                 transaction.show(mHomeFragment);
                 break;
             case R.id.action_item3:
-                if (mLoginFragment == null) {
-                    mLoginFragment = new LoginFragment();
-                    transaction.add(R.id.fragment_layout, mLoginFragment);
+                if (mMeFragment == null) {
+                    mMeFragment = new LoginFragment();
+                    transaction.add(R.id.fragment_layout, mMeFragment);
                 }
-                transaction.show(mLoginFragment);
+                transaction.show(mMeFragment);
                 break;
         }
         transaction.commit();
@@ -93,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         if(mHomeFragment!=null){
             transaction.hide(mHomeFragment);
         }
-        if(mLoginFragment!=null){
-            transaction.hide(mLoginFragment);
+        if(mMeFragment!=null){
+            transaction.hide(mMeFragment);
         }
     }
 
