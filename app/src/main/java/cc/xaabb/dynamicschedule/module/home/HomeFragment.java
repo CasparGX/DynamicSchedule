@@ -27,10 +27,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.xaabb.dynamicschedule.MainActivity;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.model.ParcelableMap;
-import cc.xaabb.dynamicschedule.module.course_edit.CourseEditActivity;
+import cc.xaabb.dynamicschedule.module.course_edit.CourseEditListActivity;
 import cc.xaabb.dynamicschedule.widget.course.CourseLayout;
 
 
@@ -83,10 +84,20 @@ public class HomeFragment extends Fragment {
         initHeader();
 
 
+
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
+    public void refreshCourse() {
+        if (mLayoutCourse!=null) {
+            mLayoutCourse.setCourseList(MainActivity.mCurCourseList);
+        }
+    }
 
     private void initHeader() {
 
@@ -108,7 +119,8 @@ public class HomeFragment extends Fragment {
             mCourse.setWeekDay(i / 4 + 1);
             mCourses.add(mCourse);
         }
-        mLayoutCourse.setCourseList(mCourses);
+        MainActivity.mCurCourseList = mCourses;
+        mLayoutCourse.setCourseList(MainActivity.mCurCourseList);
         setSpinner(20);
     }
 
@@ -156,13 +168,13 @@ public class HomeFragment extends Fragment {
             case R.id.fab_3:
                 //编辑
                 mIntent = new Intent();
-                mIntent.setClass(mContext, CourseEditActivity.class);
+                mIntent.setClass(mContext, CourseEditListActivity.class);
                 Bundle mBundle = new Bundle();
                 ParcelableMap mParcelableMap = new ParcelableMap();
                 mParcelableMap.map = (ArrayMap<String, String>) mLayoutCourse.getColorMap();
                 mBundle.putParcelable("colorMap", mParcelableMap);
                 mIntent.putExtras(mBundle);
-                mIntent.putParcelableArrayListExtra("courseList", (ArrayList<Course>) mLayoutCourse.getCourseList());
+                //mIntent.putParcelableArrayListExtra("courseList", (ArrayList<Course>) mLayoutCourse.getCourseList());
                 startActivity(mIntent);
                 break;
         }

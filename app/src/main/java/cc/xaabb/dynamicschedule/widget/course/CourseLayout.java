@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -56,7 +58,7 @@ public class CourseLayout extends FrameLayout {
     private LinearLayout layoutCourseHeader;
     private RelativeLayout layoutCourseContent;
 
-    private Integer mCurWeek = 3;
+    private Integer mCurWeek = 0;
     private List<Course> mCourseList;
 
     private Map<String, String> mColorMap;
@@ -125,7 +127,7 @@ public class CourseLayout extends FrameLayout {
                     mCourse.setWeekDay(i + 1);
                     mCourses.add(mCourse);
                 }
-                setCourseList(null);
+                refreshCourse();
             }
         });
     }
@@ -163,45 +165,50 @@ public class CourseLayout extends FrameLayout {
      * 设置课表
      * 将课表内容区域的子 view 清空, 然后添加新的 CourseItemView
      */
-    public void setCourseList(@Nullable List<Course> mCourseList) {
-        if (mCourseList == null) {
-            mCourseList = this.mCourseList;
-        } else {
-            this.mCourseList = mCourseList;
-        }
-
-        layoutCourseContent.removeAllViews();
-
+    public void setCourseList(@NonNull List<Course> mCourseList) {
+        this.mCourseList = mCourseList;
         String[] allColors = mResources.getStringArray(R.array.colorItemCourseList);
         List<String> mTempList = Arrays.asList(allColors);
         final LinkedList<String> mColorList = new LinkedList<>(mTempList);
         mColorMap = new ArrayMap<>();
 
         for (int i = 0; i < mCourseList.size(); i++) {
-            String color;
+            final String color;
             final Course mCourse = mCourseList.get(i);
-            if (!mCourse.getWeek().contains(mCurWeek)) {
-                continue;
-            }
-            LinearLayout item_course = CourseItemView.create(mContext, layoutCourseContent, defaultWidth, defaultHeight, mCourse);
-
-            if (mColorMap.containsKey(mCourse.getCourse())) {
-                color = mColorMap.get(mCourse.getCourse());
-            } else {
+            if (!mColorMap.containsKey(mCourse.getCourse())) {
                 color = mColorList.pop();
                 mColorMap.put(mCourse.getCourse(), color);
             }
 
-            GradientDrawable mGradientDrawable = (GradientDrawable) item_course.getBackground();
+        }
+    }
+
+    public void refreshCourse() {
+        layoutCourseContent.removeAllViews();
+        for (int i = 0; i < mCourseList.size(); i++) {
+            final String color;
+            final Course mCourse = mCourseList.get(i);
+            if (mCurWeek!=0 && !mCourse.getWeek().contains(mCurWeek)) {
+                continue;
+            }
+            LinearLayout item_course = CourseItemView.create(mContext, layoutCourseContent, defaultWidth, defaultHeight, mCourse);
+
+            color = mColorMap.get(mCourse.getCourse());
+
+            final GradientDrawable mGradientDrawable = (GradientDrawable) item_course.getBackground();
             mGradientDrawable.setColor(Color.parseColor(color));
+
             item_course.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext);
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext, R.style.CourseAlertDialog);
                     mBuilder.setTitle(mCourse.getCourse());
                     String content = String.format("教师: %s \n教室: %s \n\n%s\t第%s-%s节", mCourse.getTeacher(), mCourse.getLocation(), mCourse.getWeekString(), mCourse.getSectionStart(), mCourse.getSectionEnd());
                     mBuilder.setMessage(content);
-                    mBuilder.create().show();
+                    AlertDialog mDialog = mBuilder.create();
+                    mDialog.getWindow().setBackgroundDrawable(mGradientDrawable);
+                    ViewGroup mViewGroup = (ViewGroup) ((ViewGroup)mDialog.getWindow().getDecorView()).getChildAt(0);
+                    mDialog.show();
                 }
             });
             layoutCourseContent.addView(item_course);
@@ -239,7 +246,7 @@ public class CourseLayout extends FrameLayout {
      * */
     public void setCurWeek(Integer mCurWeek) {
         this.mCurWeek = mCurWeek;
-        setCourseList(null);
+        refreshCourse();
     }
 
 

@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.model.Course;
 
+import static android.content.ContentValues.TAG;
 import static cc.xaabb.dynamicschedule.config.Constants.WEEK_STRING_ARRAY;
 
 /**
@@ -62,6 +63,7 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         for (int i = 0; i < mWeek.size(); i++) {
             if(mWeek.get(i)<10) {
                 TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek1To10.getChildAt(mWeek.get(i) - 1);
+                Log.i(TAG, "onBindViewHolder: "+mColorMap.get(mCourse.getCourse()));
                 mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
                 mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
             } else {
@@ -71,7 +73,7 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         }
 
-        mHolder.mCardView.setTag(mCourse);
+        mHolder.mCardView.setTag(position);
         mHolder.mCardView.setOnClickListener(this);
     }
 
@@ -96,7 +98,6 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取数据
-            Log.i("adapter click", "onItemClick: ");
             mOnItemClickListener.onItemClick(v, v.getTag());
         }
     }
@@ -124,6 +125,6 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view , Object data);
+        void onItemClick(View view , Object position);
     }
 }

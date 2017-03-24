@@ -11,13 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.module.home.HomeFragment;
 import cc.xaabb.dynamicschedule.module.search.SearchFragment;
 import cc.xaabb.dynamicschedule.module.user.LoginFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static List<Course> mCurCourseList;
 
     @Bind(R.id.navigation)
     BottomNavigationView mNavigation;
@@ -40,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         mResources = getResources();
 
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mHomeFragment!=null) {
+            mHomeFragment.refreshCourse();
+        }
     }
 
     private void initView() {

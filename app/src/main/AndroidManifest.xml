@@ -16,8 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:name=".module.course_edit.CourseEditActivity"
+        <activity
+            android:name=".module.course_edit.CourseEditListActivity"
+            android:label="课程列表">
+        </activity>
+        <activity
+            android:name=".module.course_edit.CourseEditActivity"
             android:label="编辑课表">
         </activity>
     </application>
