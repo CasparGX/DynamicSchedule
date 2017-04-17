@@ -1,13 +1,93 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="cc.xaabb.dynamicschedule.module.user.LoginFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_ef"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="cc.xaabb.dynamicschedule.module.user.LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/shape_radius4_white">
+
+        <EditText
+            android:hint="请输入用户名"
+            android:textSize="14sp"
+            android:textColorHint="@color/colorText999"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorText999"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            />
+        <EditText
+            android:hint="请输入用户名"
+            android:textSize="14sp"
+            android:textColorHint="@color/colorText999"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:textColor="@color/colorTextBody"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:text="注册"
+            android:background="@drawable/shape_radius4_white_border1_grey"/>
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="1dp" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:text="登录"
+            android:background="@drawable/shape_radius4_primary"/>
+    </LinearLayout>
+</LinearLayout>
