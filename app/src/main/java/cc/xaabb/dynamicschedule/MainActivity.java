@@ -15,10 +15,12 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cc.xaabb.dynamicschedule.app.DSApplication;
 import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.module.home.HomeFragment;
 import cc.xaabb.dynamicschedule.module.search.SearchFragment;
 import cc.xaabb.dynamicschedule.module.user.LoginFragment;
+import cc.xaabb.dynamicschedule.utils.LocationUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.navigation)
     BottomNavigationView mNavigation;
     private String TAG = "MainActivity";
+    private DSApplication app;
     private Context mContext;
     private Resources mResources;
     private String[] spinnerData;
@@ -43,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = this;
         mResources = getResources();
-
+        LocationUtil locationUtil = new LocationUtil(this);
+        locationUtil.getLocation();
+        //app.getLocation();
         initView();
     }
 

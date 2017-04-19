@@ -2,6 +2,7 @@ package cc.xaabb.dynamicschedule.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.location.Location;
 import android.view.WindowManager;
 
 import cc.xaabb.dynamicschedule.utils.ScreenUtils;
@@ -11,6 +12,15 @@ import cc.xaabb.dynamicschedule.utils.ScreenUtils;
  */
 
 public class DSApplication extends Application {
+
+    private Location location;
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     @Override
     public void onCreate() {
