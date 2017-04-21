@@ -21,6 +21,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -28,7 +34,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     //缩放控件
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:design:25.2.0'
@@ -45,4 +50,5 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:support-v4:25.3.0'
     testCompile 'junit:junit:4.12'
+    compile files('libs/TencentLocationSDK_v5.0.1_r251203_170116_1729.jar')
 }

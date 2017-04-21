@@ -197,6 +197,7 @@ public class CourseLayout extends FrameLayout {
 
             final GradientDrawable mGradientDrawable = (GradientDrawable) item_course.getBackground();
             mGradientDrawable.setColor(Color.parseColor(color));
+            mGradientDrawable.setStroke(1, layoutCourseContent.getContext().getResources().getColor(R.color.colorAlpha999));
 
             item_course.setOnClickListener(new OnClickListener() {
                 @Override

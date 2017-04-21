@@ -5,6 +5,9 @@ import android.content.Context;
 import android.location.Location;
 import android.view.WindowManager;
 
+import com.tencent.map.geolocation.TencentLocation;
+
+import cc.xaabb.dynamicschedule.model.UserModel;
 import cc.xaabb.dynamicschedule.utils.ScreenUtils;
 
 /**
@@ -13,14 +16,8 @@ import cc.xaabb.dynamicschedule.utils.ScreenUtils;
 
 public class DSApplication extends Application {
 
-    private Location location;
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+    private TencentLocation location;
+    private UserModel userModel;
 
     @Override
     public void onCreate() {
@@ -33,4 +30,21 @@ public class DSApplication extends Application {
         ScreenUtils.screenHeight = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
         ScreenUtils.screenWidth = ((WindowManager) this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
     }
+
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
+    public TencentLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(TencentLocation location) {
+        this.location = location;
+    }
+
 }

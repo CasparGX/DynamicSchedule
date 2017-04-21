@@ -20,9 +20,12 @@ import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.module.home.HomeFragment;
 import cc.xaabb.dynamicschedule.module.search.SearchFragment;
 import cc.xaabb.dynamicschedule.module.user.LoginFragment;
+import cc.xaabb.dynamicschedule.module.user.LoginView;
+import cc.xaabb.dynamicschedule.module.user.MeFragment;
+import cc.xaabb.dynamicschedule.module.user.UserFragment;
 import cc.xaabb.dynamicschedule.utils.LocationUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginView {
 
     public static List<Course> mCurCourseList;
 
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SearchFragment mSearchFragment;
     private HomeFragment mHomeFragment;
-    private Fragment mMeFragment;
+    private MeFragment mMeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = this;
         mResources = getResources();
-        LocationUtil locationUtil = new LocationUtil(this);
+        app = (DSApplication) getApplication();
+        LocationUtil locationUtil = new LocationUtil(this, this);
         locationUtil.getLocation();
         //app.getLocation();
         initView();
@@ -72,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 });
         mNavigation.getMenu().getItem(1).setChecked(true);
         setNav(mNavigation.getMenu().getItem(1));
-        //mNavigation.performClick();
     }
 
     private void setNav(MenuItem item) {
@@ -95,10 +98,18 @@ public class MainActivity extends AppCompatActivity {
                 transaction.show(mHomeFragment);
                 break;
             case R.id.action_item3:
-                if (mMeFragment == null) {
-                    mMeFragment = new LoginFragment();
-                    transaction.add(R.id.fragment_layout, mMeFragment);
+                if (app.getUserModel()!=null && app.getUserModel().getUsername()!=null && !app.getUserModel().getUsername().equals("")) {
+                    if (mMeFragment == null || (mMeFragment!=null && !(mMeFragment instanceof UserFragment))) {
+                        mMeFragment = new UserFragment();
+                        transaction.add(R.id.fragment_layout, mMeFragment);
+                    }
+                } else {
+                    if (mMeFragment == null || (mMeFragment!=null && !(mMeFragment instanceof LoginFragment))) {
+                        mMeFragment = new LoginFragment();
+                        transaction.add(R.id.fragment_layout, mMeFragment);
+                    }
                 }
+                mMeFragment.setLoginListener(this);
                 transaction.show(mMeFragment);
                 break;
         }
@@ -118,4 +129,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void login() {
+        setNav(mNavigation.getMenu().getItem(2));
+    }
+
+    @Override
+    public void logout() {
+        setNav(mNavigation.getMenu().getItem(2));
+    }
 }

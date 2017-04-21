@@ -24,8 +24,9 @@
     </FrameLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/img_logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_margin="20dp"/>
     <LinearLayout
@@ -38,6 +39,7 @@
         android:background="@drawable/shape_radius4_white">
 
         <EditText
+            android:id="@+id/edit_username"
             android:hint="请输入用户名"
             android:textSize="14sp"
             android:textColorHint="@color/colorText999"
@@ -47,17 +49,36 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/colorText999"
+            android:background="@color/colorAlpha999"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             />
         <EditText
+            android:id="@+id/edit_password"
             android:hint="请输入密码"
             android:textSize="14sp"
             android:textColorHint="@color/colorText999"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"/>
+        <View
+            android:id="@+id/view_diver"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorAlpha999"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            />
+        <EditText
+            android:id="@+id/edit_password_confirm"
+            android:hint="请确认密码"
+            android:textSize="14sp"
+            android:textColorHint="@color/colorText999"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -69,6 +90,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_1"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="40dp"
@@ -81,6 +103,7 @@
             android:layout_width="10dp"
             android:layout_height="1dp" />
         <Button
+            android:id="@+id/btn_2"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="40dp"

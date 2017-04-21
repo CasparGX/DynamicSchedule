@@ -60,16 +60,31 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         mHolder.mTxtClassroom.setText(mCourse.getLocation());
         mHolder.mTxtCourseWeek.setText("周"+WEEK_STRING_ARRAY[mCourse.getWeekDay()-1]+" "+mCourse.getSectionStart()+"-"+mCourse.getSectionEnd()+"节");
         List<Integer> mWeek = mCourse.getWeek();
-        for (int i = 0; i < mWeek.size(); i++) {
-            if(mWeek.get(i)<10) {
-                TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek1To10.getChildAt(mWeek.get(i) - 1);
-                Log.i(TAG, "onBindViewHolder: "+mColorMap.get(mCourse.getCourse()));
-                mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
-                mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
+        for (int i = 0,j=0; i < 20; i++) {
+            if(i<10) {
+                TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek1To10.getChildAt(i);
+                if (mWeek.get(j)-1==i) {
+                    mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
+                    mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
+                    if (j<mWeek.size()-1) {
+                        j++;
+                    }
+                } else {
+                    mTxtWeekItem.setBackgroundColor(mResources.getColor(R.color.colorAlpha999));
+                    mTxtWeekItem.setTextColor(mResources.getColor(R.color.colorTextBody));
+                }
             } else {
-                TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek11To20.getChildAt(mWeek.get(i) - 1);
-                mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
-                mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
+                TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek11To20.getChildAt(i%10);
+                if (mWeek.get(j)-1==i) {
+                    mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
+                    mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
+                    if (j<mWeek.size()-1) {
+                        j++;
+                    }
+                } else {
+                    mTxtWeekItem.setBackgroundColor(mResources.getColor(R.color.colorAlpha999));
+                    mTxtWeekItem.setTextColor(mResources.getColor(R.color.colorTextBody));
+                }
             }
         }
 
