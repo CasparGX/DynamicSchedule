@@ -5,8 +5,10 @@ import java.util.List;
 import cc.xaabb.dynamicschedule.config.Constants;
 import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.model.Result;
+import cc.xaabb.dynamicschedule.model.UserModel;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -19,6 +21,10 @@ public interface ApiService {
     //获取课表
     @GET(Constants.Api.ECARD + "?" + defaultParam)
     Observable<Result<List<Course>>> getBalance(@Query(Constants.Key.SID) String sid, @Query(Constants.Key.PASSWORD) String password);
+
+    //用户注册
+    @POST(Constants.Api.USER_REGISTER)
+    Observable<Result<UserModel>> postUserRegister(@Query("username") String username, @Query("password") String password);
 
 //
 //    String secondhandDefaultParm = Constants.Api.SECOND_HAND_URL_PARAM + "?" + Constants.Key.S_TYPE + "=&" + Constants.Key.S_TITLE + "=&" + Constants.Key.S_LIMIT_ID + "=0";

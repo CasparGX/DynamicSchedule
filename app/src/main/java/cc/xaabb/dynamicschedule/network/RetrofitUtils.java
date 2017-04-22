@@ -3,7 +3,7 @@ package cc.xaabb.dynamicschedule.network;
 import cc.xaabb.dynamicschedule.config.Constants;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * Created by caspar on 16-9-12.
@@ -29,14 +29,16 @@ public class RetrofitUtils {
 //        if (BuildConfig.DEBUG) {
 //            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 //            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-//            httpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
+//            OkHttpClient.Builder mBuilder = new OkHttpClient.Builder();
+//            mBuilder.networkInterceptors().add(logging);
+//            httpClient = mBuilder.build();
 //        }
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 //.addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(MyGsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(httpClient)
                 .build();
     }

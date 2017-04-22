@@ -6,6 +6,10 @@ public class ConstUtils {
         throw new UnsupportedOperationException("u can't fuck me...");
     }
 
+    public static boolean isBlank(String str) {
+        return str==null || str.equals("") || str.equals("null");
+    }
+
     /******************** 存储相关常量 ********************/
     /**
      * Byte与Byte的倍数

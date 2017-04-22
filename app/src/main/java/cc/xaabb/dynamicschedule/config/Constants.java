@@ -8,7 +8,9 @@ public class Constants {
     public static final String[] WEEK_STRING_ARRAY = new String[]{"一","二","三","四","五","六","日"};
     public final class Api {
 
-        public static final String URL = "http://api.sky31.com";
+        public static final String URL = "http://10.0.3.2:8080";
+        public static final String USER_REGISTER = "/user/register";
+
 
         public static final String SECOND_HAND = "http://buy.sky31.com";
         public static final String SECOND_HAND_API = "http://buy.sky31.com/fleaapi";
@@ -43,6 +45,7 @@ public class Constants {
         //登录验证
         public static final String ROLE = "role";
         public static final String HASH = "hash";
+        public static final String USERNAME = "username";
         public static final String SID = "sid";
         public static final String PASSWORD = "password";
         public static final String LIBRARY_PASSWORD = "library_password";

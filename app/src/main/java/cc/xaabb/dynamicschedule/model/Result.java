@@ -10,7 +10,7 @@ public class Result<T> {
     private T data;
 
     public boolean isOk() {
-        return this.code==0;
+        return this.code==200;
     }
 
     public int getCode() {

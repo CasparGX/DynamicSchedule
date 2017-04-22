@@ -105,12 +105,12 @@ public class HomeFragment extends Fragment {
         for (int i = 0; i < 21; i++) {
 
             Course mCourse = new Course();
-            mCourse.setCourse("放牛与捡粪" + (i % 7));
-            mCourse.setLocation("一田");
+            mCourse.setCourse("大学英语" + (i % 7));
+            mCourse.setLocation("逸夫楼204");
             mCourse.setSectionStart((i / 7*2) + (i % 7*2) + 1);
             mCourse.setSectionEnd((i / 7*2) + (i % 7*2) + 3);
             mCourse.setSectionLength(2);
-            mCourse.setTeacher("刘大毛");
+            mCourse.setTeacher("王老师");
             List<Integer> mIntegerList = new ArrayList<Integer>();
             mIntegerList.add(1);
             mIntegerList.add(i % 7 + 1);
