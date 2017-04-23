@@ -1,9 +1,11 @@
 package cc.xaabb.dynamicschedule.network;
 
+import cc.xaabb.dynamicschedule.BuildConfig;
 import cc.xaabb.dynamicschedule.config.Constants;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 
 /**
  * Created by caspar on 16-9-12.
@@ -26,19 +28,17 @@ public class RetrofitUtils {
     private void init() {
 
         OkHttpClient httpClient = new OkHttpClient();
-//        if (BuildConfig.DEBUG) {
-//            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-//            OkHttpClient.Builder mBuilder = new OkHttpClient.Builder();
-//            mBuilder.networkInterceptors().add(logging);
-//            httpClient = mBuilder.build();
-//        }
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            httpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
+        }
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 //.addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(MyGsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(httpClient)
                 .build();
     }

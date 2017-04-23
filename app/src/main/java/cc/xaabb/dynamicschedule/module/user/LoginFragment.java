@@ -96,6 +96,7 @@ public class LoginFragment extends MeFragment implements LoginView {
                     String username = editUsername.getText().toString();
                     String password = editPassword.getText().toString();
                     mLoginPresenter.register(username, password);
+//                    mLoginPresenter.getHolidayNext();
 
 
                 }

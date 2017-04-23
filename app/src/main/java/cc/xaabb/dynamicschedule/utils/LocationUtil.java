@@ -3,34 +3,16 @@ package cc.xaabb.dynamicschedule.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
-import android.location.GpsStatus;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.util.Log;
 
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
 
-import org.reactivestreams.Subscriber;
-
-import java.util.List;
-import java.util.Locale;
-
 import cc.xaabb.dynamicschedule.app.DSApplication;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import rx.functions.Action1;
 
 /**
  * Created by 63024 on 2017/4/19 0019.
@@ -74,22 +56,24 @@ public class LocationUtil {
     }
 
     public void getLocation() {
-        RxPermissions rxPermissions = new RxPermissions(activity);
-        rxPermissions
+        RxPermissions.getInstance(context)
                 .request(Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Consumer<Boolean>() {
+                .subscribe(new Action1<Boolean>() {
                     @Override
-                    public void accept(Boolean granted) throws Exception {
-                        Context context = LocationUtil.this.context;
-                        TencentLocationRequest request = TencentLocationRequest.create();
-                        request.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);
-                        locationManager = TencentLocationManager.getInstance(context);
-                        int error = locationManager.requestLocationUpdates(request, listener);
-                        Log.d(TAG, "accept: location req code："+error);
+                    public void call(Boolean mBoolean) {
+                        if (mBoolean) {
+                            Context context = LocationUtil.this.context;
+                            TencentLocationRequest request = TencentLocationRequest.create();
+                            request.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA);
+                            locationManager = TencentLocationManager.getInstance(context);
+                            int error = locationManager.requestLocationUpdates(request, listener);
+                            Log.d(TAG, "accept: location req code："+error);
+                        }
                     }
+
                 });
     }
 }

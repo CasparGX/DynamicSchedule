@@ -9,7 +9,9 @@ public class Constants {
     public final class Api {
 
         public static final String URL = "http://10.0.3.2:8080";
+//        public static final String URL = "http://api.sky31.com";
         public static final String USER_REGISTER = "/user/register";
+        public static final String USER = "/user";
 
 
         public static final String SECOND_HAND = "http://buy.sky31.com";
