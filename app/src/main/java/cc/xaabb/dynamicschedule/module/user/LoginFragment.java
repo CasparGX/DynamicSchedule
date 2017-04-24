@@ -76,10 +76,14 @@ public class LoginFragment extends MeFragment implements LoginView {
             case R.id.btn_2:
                 if (loginStatus) {
                     //登录
-                    UserModel userModel = new UserModel();
-                    userModel.setUsername("123");
-                    app.setUserModel(userModel);
-                    loginView.login("");
+                    if(isBlank(editUsername.getText().toString())
+                            || isBlank(editPassword.getText().toString())) {
+                        Toast.makeText(getContext(), "请输入完整", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String username = editUsername.getText().toString();
+                    String password = editPassword.getText().toString();
+                    mLoginPresenter.login(username, password);
                 } else {
                     //注册并登录
                     if(isBlank(editUsername.getText().toString())
@@ -115,9 +119,16 @@ public class LoginFragment extends MeFragment implements LoginView {
         loginView = loginListener;
     }
 
-    @Override
-    public void login(String msg) {
 
+    @Override
+    public void loginSuccess(UserModel userModel) {
+        app.setUserModel(userModel);
+        loginView.loginSuccess(userModel);
+    }
+
+    @Override
+    public void loginFail(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -126,7 +137,12 @@ public class LoginFragment extends MeFragment implements LoginView {
     }
 
     @Override
-    public void register(@Nullable String msg) {
-
+    public void register(@Nullable String msg, @Nullable UserModel userModel) {
+        if (!isBlank(msg)) {
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        }
+        if (userModel!=null) {
+            mLoginPresenter.login(userModel.getUsername(),userModel.getPassword());
+        }
     }
 }

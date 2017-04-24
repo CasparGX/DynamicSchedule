@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cc.xaabb.dynamicschedule.app.DSApplication;
 import cc.xaabb.dynamicschedule.model.Course;
+import cc.xaabb.dynamicschedule.model.UserModel;
 import cc.xaabb.dynamicschedule.module.home.HomeFragment;
 import cc.xaabb.dynamicschedule.module.search.SearchFragment;
 import cc.xaabb.dynamicschedule.module.user.LoginFragment;
@@ -128,10 +129,14 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         }
     }
 
+    @Override
+    public void loginSuccess(UserModel userModel) {
+        setNav(mNavigation.getMenu().getItem(2));
+    }
 
     @Override
-    public void login(String msg) {
-        setNav(mNavigation.getMenu().getItem(2));
+    public void loginFail(String msg) {
+
     }
 
     @Override
@@ -140,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void register(@Nullable String msg) {
+    public void register(@Nullable String msg, @Nullable UserModel userModel) {
 
     }
 }

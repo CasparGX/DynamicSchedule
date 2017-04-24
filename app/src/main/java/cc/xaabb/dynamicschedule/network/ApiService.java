@@ -4,7 +4,6 @@ import java.util.List;
 
 import cc.xaabb.dynamicschedule.config.Constants;
 import cc.xaabb.dynamicschedule.model.Course;
-import cc.xaabb.dynamicschedule.model.HolidayNextModel;
 import cc.xaabb.dynamicschedule.model.Result;
 import cc.xaabb.dynamicschedule.model.UserModel;
 import retrofit2.http.GET;
@@ -26,6 +25,10 @@ public interface ApiService {
     //用户注册
     @POST(Constants.Api.USER_REGISTER)
     Observable<Result<UserModel>> postUserRegister(@Query("username") String username, @Query("password") String password);
+
+    //用户登录
+    @POST(Constants.Api.USER_LOGIN)
+    Observable<Result<UserModel>> postUserLogin(@Query("username") String username, @Query("password") String password);
 
     //获取用户
     @GET(Constants.Api.USER+"/28")
@@ -57,9 +60,6 @@ public interface ApiService {
 //    @GET(Constants.Api.SEARCH_MATE + "?" + defaultParam + "&server=remote")
 //    Observable<MateInfoModel> getMateInfo(@Query(Constants.Key.SID) String sid, @Query(Constants.Key.NAME) String name, @Query(Constants.Key.CARD) String card, @Query(Constants.Key.TYPE) String type);
 //
-    //获取节假日信息
-    @GET(Constants.Api.HOLIDAY + "?" + defaultParam + "&" + Constants.Key.HOLIDAY_ACTION + "=" + Constants.Key.HOLIDAY_ACTION_NEXT)
-    Observable<HolidayNextModel> getHolidayNext();
 //
 //    @GET(Constants.Api.HOLIDAY + "?" + defaultParam + "&" + Constants.Key.HOLIDAY_ACTION + "=" + Constants.Key.HOLIDAY_ACTION_ALL)
 //    Observable<HolidayAllModel> getHolidayAll();
