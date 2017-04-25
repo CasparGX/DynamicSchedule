@@ -142,7 +142,7 @@ public class LoginFragment extends MeFragment implements LoginView {
             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
         }
         if (userModel!=null) {
-            mLoginPresenter.login(userModel.getUsername(),userModel.getPassword());
+            mLoginPresenter.login(userModel.getUsername(),editPassword.getText().toString());
         }
     }
 }

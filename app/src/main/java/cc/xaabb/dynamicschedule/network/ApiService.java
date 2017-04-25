@@ -1,12 +1,20 @@
 package cc.xaabb.dynamicschedule.network;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import cc.xaabb.dynamicschedule.config.Constants;
 import cc.xaabb.dynamicschedule.model.Course;
+import cc.xaabb.dynamicschedule.model.CourseList;
 import cc.xaabb.dynamicschedule.model.Result;
 import cc.xaabb.dynamicschedule.model.UserModel;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -29,6 +37,11 @@ public interface ApiService {
     //用户登录
     @POST(Constants.Api.USER_LOGIN)
     Observable<Result<UserModel>> postUserLogin(@Query("username") String username, @Query("password") String password);
+
+    //分享课表
+    @Headers({"contentType : 'application/json'"})
+    @POST(Constants.Api.SCHEDULE_UPLOAD)
+    Observable<Result<JSONObject>> postScheduleUpload(@Body String course);
 
     //获取用户
     @GET(Constants.Api.USER+"/28")

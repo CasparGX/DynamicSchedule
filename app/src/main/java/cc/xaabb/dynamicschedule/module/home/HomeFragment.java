@@ -29,13 +29,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.xaabb.dynamicschedule.MainActivity;
 import cc.xaabb.dynamicschedule.R;
+import cc.xaabb.dynamicschedule.app.DSApplication;
 import cc.xaabb.dynamicschedule.model.Course;
+import cc.xaabb.dynamicschedule.model.CourseList;
 import cc.xaabb.dynamicschedule.model.ParcelableMap;
 import cc.xaabb.dynamicschedule.module.course_edit.CourseEditListActivity;
 import cc.xaabb.dynamicschedule.widget.course.CourseLayout;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ScheduleUploadView{
 
     @Bind(R.id.layout_root)
     CoordinatorLayout mLayoutRoot;
@@ -54,6 +56,7 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.fab_menu)
     FloatingActionsMenu mFabMenu;
     private String TAG = "MainActivity";
+    private DSApplication app;
     private Context mContext;
     private Resources mResources;
     private int screenWidth;
@@ -80,6 +83,7 @@ public class HomeFragment extends Fragment {
         ButterKnife.bind(this, view);
         instance = this;
         mContext = this.getContext();
+        app = (DSApplication) getActivity().getApplication();
         mResources = getResources();
         initHeader();
 
@@ -154,12 +158,17 @@ public class HomeFragment extends Fragment {
         switch (view.getId()) {
             case R.id.fab_1:
                 // 分享
-                Bitmap mBitmap = mLayoutCourse.getCourseScreenShot();
-                ImageView mImageView = new ImageView(mContext);
-                mImageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                mImageView.setBackground(new BitmapDrawable(mBitmap));
-                mLayoutRoot.addView(mImageView);
-
+//                Bitmap mBitmap = mLayoutCourse.getCourseScreenShot();
+//                ImageView mImageView = new ImageView(mContext);
+//                mImageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//                mImageView.setBackground(new BitmapDrawable(mBitmap));
+//                mLayoutRoot.addView(mImageView);
+                SchedulePresenter schedulePresenter = new SchedulePresenter();
+                CourseList courseList = new CourseList();
+                courseList.setCity("");
+                courseList.setUid(app.getUserModel().getId());
+                courseList.setCourseList(mLayoutCourse.getCourseList());
+                schedulePresenter.upload(this, courseList, app.getUserModel().getToken());
                 break;
             case R.id.fab_2:
                 //设置
@@ -178,5 +187,15 @@ public class HomeFragment extends Fragment {
                 startActivity(mIntent);
                 break;
         }
+    }
+
+    @Override
+    public void uploadSuccess(String shareCode) {
+
+    }
+
+    @Override
+    public void uploadFail(String msg) {
+
     }
 }

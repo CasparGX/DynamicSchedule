@@ -13,6 +13,7 @@ public class Constants {
         public static final String USER = "/user";
         public static final String USER_REGISTER = "/user/register";
         public static final String USER_LOGIN = "/user/login";
+        public static final String SCHEDULE_UPLOAD = "/schedule/upload";
 
 
         public static final String SECOND_HAND = "http://buy.sky31.com";

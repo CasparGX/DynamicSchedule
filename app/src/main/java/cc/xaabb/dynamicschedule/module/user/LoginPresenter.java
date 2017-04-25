@@ -35,16 +35,17 @@ public class LoginPresenter extends BasePresenter {
                     @Override
                     public void onNext(Result<UserModel> mResult) {
                         UserModel mUserModel = mResult.getData();
-                        Log.d(TAG, "onNext: "+mUserModel);
+                        mLoginView.register(null, mUserModel);
+                        Log.d(TAG, "注册成功: "+mUserModel.getUsername());
 
                     }
 
 
                     @Override
                     public void onApiException(ApiException e) {
-                        mLoginView.loginFail(e.getMsg());
+                        mLoginView.register(e.getMsg(), null);
 //
-                        Log.d(TAG, "onApiException: "+e.getMsg());
+                        Log.d(TAG, "注册失败: "+e.getMsg());
                     }
                 });
     }
@@ -60,7 +61,7 @@ public class LoginPresenter extends BasePresenter {
                     public void onNext(Result<UserModel> mResult) {
                         UserModel mUserModel = mResult.getData();
                         mLoginView.loginSuccess(mUserModel);
-                        Log.d(TAG, "onNext: "+mUserModel);
+                        Log.d(TAG, "登录成功: "+mUserModel);
 
                     }
 
@@ -69,7 +70,7 @@ public class LoginPresenter extends BasePresenter {
                     public void onApiException(ApiException e) {
                         mLoginView.loginFail(e.getMsg());
 //
-                        Log.d(TAG, "onApiException: "+e.getMsg());
+                        Log.d(TAG, "登录失败: "+e.getMsg());
                     }
                 });
     }
