@@ -40,21 +40,18 @@ public class SchedulePresenter extends BasePresenter {
         Gson gson = new Gson();
 
         Log.d(TAG, "upload: "+gson.toJson(jsonObject));
-        mApiService.postScheduleUpload(gson.toJson(jsonObject))
+//        mApiService.postScheduleUpload(gson.toJson(jsonObject))
+        mApiService.postScheduleUpload(jsonObject)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<Result<JSONObject>>() {
+                .subscribe(new BaseSubscriber<Result<String>>() {
 
                     @Override
-                    public void onNext(Result<JSONObject> mResult) {
-                        JSONObject jsonObject = mResult.getData();
-                        try {
-                            String shareCode = jsonObject.getString("shareCode");
+                    public void onNext(Result<String> mResult) {
+                        //JSONObject jsonObject = mResult.getData();
+                            String shareCode = mResult.getData();
                             scheduleUploadView.uploadSuccess(shareCode);
                             Log.d(TAG, "课表上传成功: "+shareCode);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
 
                     }
 

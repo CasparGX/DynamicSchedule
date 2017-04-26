@@ -41,7 +41,7 @@ public interface ApiService {
     //分享课表
     @Headers({"contentType : 'application/json'"})
     @POST(Constants.Api.SCHEDULE_UPLOAD)
-    Observable<Result<JSONObject>> postScheduleUpload(@Body String course);
+    Observable<Result<String>> postScheduleUpload(@Body JSONObject course);
 
     //获取用户
     @GET(Constants.Api.USER+"/28")
