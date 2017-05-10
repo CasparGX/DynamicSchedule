@@ -24,10 +24,11 @@
 
     <ImageView
         android:id="@+id/btn_action"
-        android:layout_gravity="right"
+        android:padding="6dp"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:src="@drawable/ic_menu"
-        android:visibility="gone"/>
+        android:src="@drawable/ic_add"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </LinearLayout>

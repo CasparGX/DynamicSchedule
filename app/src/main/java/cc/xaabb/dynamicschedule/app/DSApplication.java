@@ -47,4 +47,11 @@ public class DSApplication extends Application {
         this.location = location;
     }
 
+    public boolean isLogin() {
+        boolean isLogin = false;
+        if (userModel!=null && userModel.getId()!=null) {
+            isLogin = true;
+        }
+        return isLogin;
+    }
 }

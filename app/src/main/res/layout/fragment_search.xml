@@ -29,6 +29,7 @@
         android:background="@drawable/shape_radius4_white_border1_grey"
         android:orientation="horizontal">
         <EditText
+            android:id="@+id/edit_search"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:padding="5dp"
@@ -37,6 +38,7 @@
             android:background="@null"/>
 
         <Button
+            android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/white"
@@ -45,6 +47,7 @@
     </LinearLayout>
 
     <ListView
+        android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 

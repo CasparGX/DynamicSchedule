@@ -7,33 +7,44 @@
     android:orientation="vertical"
     tools:context="cc.xaabb.dynamicschedule.module.user.LoginFragment">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:layout_height="160dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="登录"
             android:textColor="@color/white"
-            android:textSize="18sp" />
-    </FrameLayout>
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:id="@+id/img_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"/>
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="18dp"
         android:padding="10dp"
         android:orientation="vertical"
         android:background="@drawable/shape_radius4_white">
@@ -60,6 +71,7 @@
             android:textColorHint="@color/colorText999"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:background="@android:color/transparent"/>
         <View
             android:id="@+id/view_diver"
@@ -76,6 +88,7 @@
             android:textSize="14sp"
             android:textColorHint="@color/colorText999"
             android:layout_width="match_parent"
+            android:inputType="textPassword"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:visibility="gone"/>

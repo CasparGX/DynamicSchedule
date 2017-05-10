@@ -55,7 +55,11 @@ public class LocationUtil {
         };
     }
 
+    /**
+     * 获取定位信息
+     * */
     public void getLocation() {
+        //判断动态权限
         RxPermissions.getInstance(context)
                 .request(Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION,

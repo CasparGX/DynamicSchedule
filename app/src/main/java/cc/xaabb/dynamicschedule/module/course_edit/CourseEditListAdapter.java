@@ -64,7 +64,11 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if(i<10) {
                 TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek1To10.getChildAt(i);
                 if (mWeek.get(j)-1==i) {
-                    mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
+                    if (mColorMap==null || !mColorMap.containsKey(mCourse.getCourse()) || mColorMap.size()==0) {
+                        mTxtWeekItem.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+                    } else {
+                        mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
+                    }
                     mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
                     if (j<mWeek.size()-1) {
                         j++;
@@ -76,7 +80,11 @@ public class CourseEditListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 TextView mTxtWeekItem = (TextView) mHolder.mLayoutWeek11To20.getChildAt(i%10);
                 if (mWeek.get(j)-1==i) {
-                    mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
+                    if (mColorMap==null || !mColorMap.containsKey(mCourse.getCourse()) || mColorMap.size()==0) {
+                        mTxtWeekItem.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+                    } else {
+                        mTxtWeekItem.setBackgroundColor(Color.parseColor(mColorMap.get(mCourse.getCourse())));
+                    }
                     mTxtWeekItem.setTextColor(mResources.getColor(R.color.white));
                     if (j<mWeek.size()-1) {
                         j++;

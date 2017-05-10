@@ -14,12 +14,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cc.xaabb.dynamicschedule.MainActivity;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.base.BaseActivity;
@@ -84,8 +86,34 @@ public class CourseEditActivity extends BaseActivity {
 
     private void initView() {
         setSpinnerWeekly();
+        setSpinnerSection();
     }
 
+    @OnClick({R.id.btn_commit})
+    public void btnClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
+            case R.id.btn_commit:
+                if (mSpinnerSectionStart.getSelectedItemPosition()>mSpinnerSectionEnd.getSelectedItemPosition()) {
+                    Toast.makeText(this, "开始周不能大于结束周", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mCourse.setWeek(mEditWeekList);
+                mCourse.setCourse(mEditCourse.getText().toString());
+                mCourse.setLocation(mEditLocation.getText().toString());
+                mCourse.setSectionLength(mSpinnerSectionEnd.getSelectedItemPosition()-mSpinnerSectionStart.getSelectedItemPosition());
+                mCourse.setTeacher(mEditTeacher.getText().toString());
+                if (position == -1) {
+                    MainActivity.mCurCourseList.add(mCourse);
+                } else {
+                    MainActivity.mCurCourseList.set(position, mCourse);
+                }
+                finish();
+                break;
+        }
+    }
     private void initData() {
 
         Intent mIntent = getIntent();
@@ -95,6 +123,8 @@ public class CourseEditActivity extends BaseActivity {
         mBtnCommit.setBackgroundColor(mColorSelected);
 
         if (!mIntent.hasExtra("position")) {
+            mCourse = new Course();
+            position = -1;
             return;
         }
 
@@ -104,6 +134,13 @@ public class CourseEditActivity extends BaseActivity {
         mEditTeacher.setText(mCourse.getTeacher());
         mEditLocation.setText(mCourse.getLocation());
         mSpinnerWeekly.setSelection(mCourse.getWeekDay()-1);
+        mSpinnerSectionStart.setSelection(mCourse.getSectionStart()-1);
+        mSpinnerSectionEnd.setSelection(mCourse.getSectionEnd()-1);
+
+
+    }
+
+    private void initListener() {
 
         List<Integer> mWeek = mCourse.getWeek();
         for (int i = 0; i < 20; i++) {
@@ -125,17 +162,12 @@ public class CourseEditActivity extends BaseActivity {
                 }
             });
 
-            if (mWeek.contains(i + 1)) {
+            if (position!=-1 && mWeek.contains(i + 1)) {
                 mTxtWeekItem.setBackgroundColor(mColorSelected);
                 mTxtWeekItem.setTag("selected");
                 mEditWeekList.add(i+1);
             }
         }
-
-    }
-
-    private void initListener() {
-
     }
 
     private void toggleWeek(TextView mTextView) {
@@ -174,6 +206,7 @@ public class CourseEditActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //
+                mCourse.setWeekDay(i+1);
             }
 
             @Override
@@ -196,6 +229,9 @@ public class CourseEditActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //
+                mCourse.setSectionEnd(i + 1);
+                //mCourse.setWeekString(mSpinnerSectionStart.getSelectedItemPosition() + "-" + (i + 1) + "周");
+
             }
 
             @Override
@@ -208,6 +244,8 @@ public class CourseEditActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //
+                mCourse.setSectionStart(i+1);
+                //mCourse.setWeekString(mSpinnerSectionEnd.getSelectedItemPosition()+"-"+(i+1)+"周");
             }
 
             @Override
@@ -219,7 +257,7 @@ public class CourseEditActivity extends BaseActivity {
         String [] mData = new String[alllength];
         int a;
         for (a = 0; a < alllength; a++) {
-            mData[a] = mResources.getString(R.string.course_no) + a +"节";
+            mData[a] = mResources.getString(R.string.course_no) + (a+1) +"节";
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.item_spinner_course_week, mData);
         adapter.setDropDownViewResource(R.layout.item_spinner_course_week);

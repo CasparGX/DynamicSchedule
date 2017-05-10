@@ -51,6 +51,13 @@ public class CourseEditListActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isEditable) {
+            mCourseEditListAdapter.notifyDataSetChanged();
+        }
+    }
 
     private void initView() {
         mRecyclerCourseList.setLayoutManager(new LinearLayoutManager(this));
@@ -66,13 +73,16 @@ public class CourseEditListActivity extends BaseActivity {
         } else {
             mCourseList = MainActivity.mCurCourseList;
             isEditable = true;
+            Bundle mBundle = mIntent.getExtras();
+            mColorMap = ((ParcelableMap)mBundle.getParcelable("colorMap")).map;
+            mCourseEditListAdapter.setColorMap(mColorMap);
+        }
+        if (isEditable) {
+            mBtnAction.setVisibility(View.VISIBLE);
         }
 
         mCourseEditListAdapter.setCourseList(mCourseList);
 
-        Bundle mBundle = mIntent.getExtras();
-        mColorMap = ((ParcelableMap)mBundle.getParcelable("colorMap")).map;
-        mCourseEditListAdapter.setColorMap(mColorMap);
 
 
     }
@@ -101,8 +111,18 @@ public class CourseEditListActivity extends BaseActivity {
         mTxtTitle.setText(title);
     }
 
-    @OnClick(R.id.btn_back)
-    void onClickBtnBack() {
-        finish();
+    @OnClick({R.id.btn_back, R.id.btn_action})
+    void btnClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
+
+            case R.id.btn_action:
+                Intent mIntent = new Intent();
+                mIntent.setClass(mContext, CourseEditActivity.class);
+                startActivity(mIntent);
+                break;
+        }
     }
 }

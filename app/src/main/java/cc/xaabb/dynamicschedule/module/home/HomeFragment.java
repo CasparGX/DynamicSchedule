@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -159,13 +160,21 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
             case R.id.fab_1:
                 // 分享
 //                Bitmap mBitmap = mLayoutCourse.getCourseScreenShot();
-//                ImageView mImageView = new ImageView(mContext);
+//                ImageView mImageView = new ImageView(mContext);img_logo
 //                mImageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 //                mImageView.setBackground(new BitmapDrawable(mBitmap));
 //                mLayoutRoot.addView(mImageView);
+                if (!app.isLogin()) {
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 SchedulePresenter schedulePresenter = new SchedulePresenter();
                 CourseList courseList = new CourseList();
-                courseList.setCity("");
+                if (app.getLocation()!=null) {
+                    courseList.setCity(app.getLocation().getCity());
+                } else {
+                    courseList.setCity("上海市");
+                }
                 courseList.setUid(app.getUserModel().getId());
                 courseList.setCourseList(mLayoutCourse.getCourseList());
                 schedulePresenter.upload(this, courseList, app.getUserModel().getToken());

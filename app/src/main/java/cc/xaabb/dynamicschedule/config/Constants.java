@@ -11,6 +11,7 @@ public class Constants {
         public static final String URL = "http://10.0.3.2:8080";
 //        public static final String URL = "http://api.sky31.com";
         public static final String USER = "/user";
+        public static final String SCHEDULE = "/schedule";
         public static final String USER_REGISTER = "/user/register";
         public static final String USER_LOGIN = "/user/login";
         public static final String SCHEDULE_UPLOAD = "/schedule/upload";

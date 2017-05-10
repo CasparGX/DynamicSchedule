@@ -8,6 +8,7 @@ import cc.xaabb.dynamicschedule.config.Constants;
 import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.model.CourseList;
 import cc.xaabb.dynamicschedule.model.Result;
+import cc.xaabb.dynamicschedule.model.Schedule;
 import cc.xaabb.dynamicschedule.model.UserModel;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -16,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -46,6 +48,18 @@ public interface ApiService {
     //获取用户
     @GET(Constants.Api.USER+"/28")
     Observable<Result<UserModel>> getUser(@Query("id") int id);
+
+    //获取课表列表
+    @GET(Constants.Api.SCHEDULE+"/city/{city}")
+    Observable<Result<List<Schedule>>> getScheduleListByCity(@Path("city") String city);
+
+    //获取课表列表
+    @GET(Constants.Api.SCHEDULE+"/search/{shareCode}")
+    Observable<Result<List<Schedule>>> getScheduleListByShareCode(@Path("shareCode") String shareCode);
+
+    //获取课表
+    @GET(Constants.Api.SCHEDULE+"/{shareCode}")
+    Observable<Result<CourseList>> getScheduleByShareCode(@Path("shareCode") String shareCode);
 
 //
 //    String secondhandDefaultParm = Constants.Api.SECOND_HAND_URL_PARAM + "?" + Constants.Key.S_TYPE + "=&" + Constants.Key.S_TITLE + "=&" + Constants.Key.S_LIMIT_ID + "=0";
