@@ -79,7 +79,9 @@ public class CourseEditListActivity extends BaseActivity {
             mCourseEditListAdapter.setColorMap(mColorMap);
         }
         if (isEditable) {
-            mBtnAction.setVisibility(View.VISIBLE);
+            mBtnAction.setImageResource(R.drawable.ic_add);
+        } else {
+            mBtnAction.setImageResource(R.drawable.ic_set_current);
         }
 
         mCourseEditListAdapter.setCourseList(mCourseList);
@@ -120,9 +122,13 @@ public class CourseEditListActivity extends BaseActivity {
                 break;
 
             case R.id.btn_action:
-                Intent mIntent = new Intent();
-                mIntent.setClass(mContext, CourseEditActivity.class);
-                startActivity(mIntent);
+                if (isEditable) {
+                    Intent mIntent = new Intent();
+                    mIntent.setClass(mContext, CourseEditActivity.class);
+                    startActivity(mIntent);
+                } else {
+                    MainActivity.setmCurCourseList(mCourseList);
+                }
                 break;
         }
     }
