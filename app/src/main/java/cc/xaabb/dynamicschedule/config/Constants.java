@@ -8,13 +8,15 @@ public class Constants {
     public static final String[] WEEK_STRING_ARRAY = new String[]{"一","二","三","四","五","六","日"};
     public final class Api {
 
-        public static final String URL = "http://10.0.3.2:8080";
-//        public static final String URL = "http://api.sky31.com";
-        public static final String USER = "/user";
-        public static final String SCHEDULE = "/schedule";
-        public static final String USER_REGISTER = "/user/register";
-        public static final String USER_LOGIN = "/user/login";
-        public static final String SCHEDULE_UPLOAD = "/schedule/upload";
+//        public static final String URL = "http://10.0.3.2:8080";
+        public static final String URL = "http://39.108.10.2:8080";
+        //        public static final String URL = "http://api.sky31.com";
+        public static final String PROJECT_NAME = "/DynamicSchedule";
+        public static final String USER = PROJECT_NAME+"/user";
+        public static final String SCHEDULE = PROJECT_NAME+"/schedule";
+        public static final String USER_REGISTER = PROJECT_NAME+"/user/register";
+        public static final String USER_LOGIN = PROJECT_NAME+"/user/login";
+        public static final String SCHEDULE_UPLOAD = PROJECT_NAME+"/schedule/upload";
 
 
         public static final String SECOND_HAND = "http://buy.sky31.com";

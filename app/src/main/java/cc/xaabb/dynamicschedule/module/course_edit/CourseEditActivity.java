@@ -170,6 +170,9 @@ public class CourseEditActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 切换上课周选中状态
+     * */
     private void toggleWeek(TextView mTextView) {
         Object mTag = mTextView.getTag();
         if (mTag!=null && mTag.equals("selected")) {

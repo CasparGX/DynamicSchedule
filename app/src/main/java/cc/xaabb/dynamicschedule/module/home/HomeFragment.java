@@ -173,7 +173,7 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
                 if (app.getLocation()!=null) {
                     courseList.setCity(app.getLocation().getCity());
                 } else {
-                    courseList.setCity("上海市");
+                    courseList.setCity("湘潭市");
                 }
                 courseList.setUid(app.getUserModel().getId());
                 courseList.setCourseList(mLayoutCourse.getCourseList());
