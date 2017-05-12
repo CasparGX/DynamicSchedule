@@ -24,7 +24,7 @@
 
     <ImageView
         android:id="@+id/btn_action"
-        android:padding="6dp"
+        android:padding="11dp"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:src="@drawable/ic_add"

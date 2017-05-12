@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -24,11 +27,13 @@ import cc.xaabb.dynamicschedule.module.user.LoginFragment;
 import cc.xaabb.dynamicschedule.module.user.LoginView;
 import cc.xaabb.dynamicschedule.module.user.MeFragment;
 import cc.xaabb.dynamicschedule.module.user.UserFragment;
+import cc.xaabb.dynamicschedule.utils.ACache;
 import cc.xaabb.dynamicschedule.utils.LocationUtil;
 
 public class MainActivity extends AppCompatActivity implements LoginView {
 
-    public static List<Course> mCurCourseList;
+    public static final String CUR_COURSE_LIST = "CurCourseList";
+    private static List<Course> mCurCourseList;
 
     @Bind(R.id.navigation)
     BottomNavigationView mNavigation;
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     private DSApplication app;
     private Context mContext;
     private Resources mResources;
+    private static ACache aCache;
     private String[] spinnerData;
 
 
@@ -51,10 +57,19 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         mContext = this;
         mResources = getResources();
         app = (DSApplication) getApplication();
+        aCache = ACache.get(this);
         LocationUtil locationUtil = new LocationUtil(this, this);
         locationUtil.getLocation();
         //app.getLocation();
         initView();
+        initData();
+    }
+
+    private void initData() {
+        getCourseListFromCache();
+        Gson gson = new Gson();
+        UserModel userModel = gson.fromJson(aCache.getAsString("user"), UserModel.class);
+        app.setUserModel(userModel);
     }
 
     @Override
@@ -128,6 +143,46 @@ public class MainActivity extends AppCompatActivity implements LoginView {
             transaction.hide(mMeFragment);
         }
     }
+
+
+    public static List<Course> getmCurCourseList() {
+        return mCurCourseList;
+    }
+
+    public static Course getmCurCourse(int position) {
+        return mCurCourseList.get(position);
+    }
+
+    public static void setmCurCourseList(List<Course> mCurCourseList) {
+        MainActivity.mCurCourseList = mCurCourseList;
+        setCourseListCache();
+    }
+
+    public static void addmCurCourseList(Course mCourse) {
+        MainActivity.mCurCourseList.add(mCourse);
+        setCourseListCache();
+    }
+
+    public static void setmCurCourseList(int position, Course mCourse) {
+        MainActivity.mCurCourseList.set(position, mCourse);
+        setCourseListCache();
+    }
+
+    public static void setCourseListCache() {
+        Gson gson = new Gson();
+        String curCourseList = gson.toJson(mCurCourseList);
+        aCache.put(CUR_COURSE_LIST, curCourseList);
+    }
+
+    private void getCourseListFromCache() {
+        String curCourse = aCache.getAsString(CUR_COURSE_LIST);
+        if (curCourse == null) {
+            return ;
+        }
+        Gson gson = new Gson();
+        mCurCourseList = gson.fromJson(curCourse, new TypeToken<List<Course>>(){}.getType());
+    }
+
 
     @Override
     public void loginSuccess(UserModel userModel) {

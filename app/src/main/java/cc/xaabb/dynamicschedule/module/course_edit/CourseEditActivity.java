@@ -106,9 +106,9 @@ public class CourseEditActivity extends BaseActivity {
                 mCourse.setSectionLength(mSpinnerSectionEnd.getSelectedItemPosition()-mSpinnerSectionStart.getSelectedItemPosition());
                 mCourse.setTeacher(mEditTeacher.getText().toString());
                 if (position == -1) {
-                    MainActivity.mCurCourseList.add(mCourse);
+                    MainActivity.addmCurCourseList(mCourse);
                 } else {
-                    MainActivity.mCurCourseList.set(position, mCourse);
+                    MainActivity.setmCurCourseList(position, mCourse);
                 }
                 finish();
                 break;
@@ -129,7 +129,7 @@ public class CourseEditActivity extends BaseActivity {
         }
 
         position = mIntent.getIntExtra("position", 0);
-        mCourse = MainActivity.mCurCourseList.get(position);
+        mCourse = MainActivity.getmCurCourse(position);
         mEditCourse.setText(mCourse.getCourse());
         mEditTeacher.setText(mCourse.getTeacher());
         mEditLocation.setText(mCourse.getLocation());

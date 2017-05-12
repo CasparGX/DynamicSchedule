@@ -35,6 +35,7 @@ import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.model.CourseList;
 import cc.xaabb.dynamicschedule.model.ParcelableMap;
 import cc.xaabb.dynamicschedule.module.course_edit.CourseEditListActivity;
+import cc.xaabb.dynamicschedule.utils.ACache;
 import cc.xaabb.dynamicschedule.widget.course.CourseLayout;
 
 
@@ -60,6 +61,7 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
     private DSApplication app;
     private Context mContext;
     private Resources mResources;
+    private ACache mACache;
     private int screenWidth;
     int defaultHeight;
     int defaultWidth;
@@ -86,6 +88,7 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
         mContext = this.getContext();
         app = (DSApplication) getActivity().getApplication();
         mResources = getResources();
+        mACache = ACache.get(getContext());
         initHeader();
 
 
@@ -100,7 +103,7 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
 
     public void refreshCourse() {
         if (mLayoutCourse!=null) {
-            mLayoutCourse.setCourseList(MainActivity.mCurCourseList);
+            mLayoutCourse.setCourseList(MainActivity.getmCurCourseList());
         }
     }
 
@@ -124,8 +127,8 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
             mCourse.setWeekDay(i / 4 + 1);
             mCourses.add(mCourse);
         }
-        MainActivity.mCurCourseList = mCourses;
-        mLayoutCourse.setCourseList(MainActivity.mCurCourseList);
+        MainActivity.setmCurCourseList(mCourses);
+        mLayoutCourse.setCourseList(MainActivity.getmCurCourseList());
         setSpinner(20);
     }
 
@@ -151,6 +154,18 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.item_spinner_course_week2, spinnerData);
         adapter.setDropDownViewResource(R.layout.item_spinner_course_week);
         mCurWeekSpinner.setAdapter(adapter);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            String curWeekStr = mACache.getAsString("curWeek");
+            int curWeek = curWeekStr==null ? 1 : Integer.parseInt(curWeekStr);
+            mCurWeekSpinner.setSelection(curWeek-1);
+            mLayoutCourse.setCurWeek(curWeek);
+            mLayoutCourse.refreshCourse();
+        }
     }
 
     @OnClick({R.id.fab_3, R.id.fab_2, R.id.fab_1})

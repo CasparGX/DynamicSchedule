@@ -60,6 +60,7 @@ public class CourseEditListActivity extends BaseActivity {
     }
 
     private void initView() {
+        mBtnAction.setVisibility(View.VISIBLE);
         mRecyclerCourseList.setLayoutManager(new LinearLayoutManager(this));
         mCourseEditListAdapter = new CourseEditListAdapter(this);
         mRecyclerCourseList.setAdapter(mCourseEditListAdapter);
@@ -71,7 +72,7 @@ public class CourseEditListActivity extends BaseActivity {
             mCourseList = mIntent.getParcelableArrayListExtra("courseList");
             isEditable = false;
         } else {
-            mCourseList = MainActivity.mCurCourseList;
+            mCourseList = MainActivity.getmCurCourseList();
             isEditable = true;
             Bundle mBundle = mIntent.getExtras();
             mColorMap = ((ParcelableMap)mBundle.getParcelable("colorMap")).map;

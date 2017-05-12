@@ -11,12 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.app.DSApplication;
 import cc.xaabb.dynamicschedule.model.UserModel;
+import cc.xaabb.dynamicschedule.utils.ACache;
 
 import static cc.xaabb.dynamicschedule.utils.ConstUtils.isBlank;
 
@@ -123,6 +126,10 @@ public class LoginFragment extends MeFragment implements LoginView {
     @Override
     public void loginSuccess(UserModel userModel) {
         app.setUserModel(userModel);
+        ACache aCache = ACache.get(getContext());
+        Gson gson = new Gson();
+        String user = gson.toJson(userModel);
+        aCache.put("user",user);
         loginView.loginSuccess(userModel);
     }
 

@@ -98,4 +98,28 @@ public class SearchPresenter extends BasePresenter {
                     }
                 });
     }
+
+    public void getScheduleByUid(int uid) {
+        mApiService.getScheduleListByUid(uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<Result<List<Schedule>>>() {
+
+                    @Override
+                    public void onNext(Result<List<Schedule>> mResult) {
+                        //JSONObject jsonObject = mResult.getData();
+                        List<Schedule> mList = mResult.getData();
+                        mSearchView.searchSuccess(mList);
+                        Log.d(TAG, "课表获取成功: "+mList);
+
+                    }
+
+
+                    @Override
+                    public void onApiException(ApiException e) {
+                        mSearchView.getCourseFail(e.getMsg());
+                        Log.d(TAG, "课表获取失败: "+e.getMsg());
+                    }
+                });
+    }
 }

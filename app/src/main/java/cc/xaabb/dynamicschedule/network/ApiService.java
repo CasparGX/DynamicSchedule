@@ -1,5 +1,7 @@
 package cc.xaabb.dynamicschedule.network;
 
+import android.content.Intent;
+
 import org.json.JSONObject;
 
 import java.util.List;
@@ -56,6 +58,10 @@ public interface ApiService {
     //获取课表列表
     @GET(Constants.Api.SCHEDULE+"/search/{shareCode}")
     Observable<Result<List<Schedule>>> getScheduleListByShareCode(@Path("shareCode") String shareCode);
+
+    //获取课表列表
+    @GET(Constants.Api.SCHEDULE+"/searchByUid/{uid}")
+    Observable<Result<List<Schedule>>> getScheduleListByUid(@Path("uid") int uid);
 
     //获取课表
     @GET(Constants.Api.SCHEDULE+"/{shareCode}")

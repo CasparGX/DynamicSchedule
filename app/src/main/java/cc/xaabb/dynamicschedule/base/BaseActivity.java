@@ -11,8 +11,10 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 
 import cc.xaabb.dynamicschedule.R;
+import cc.xaabb.dynamicschedule.app.DSApplication;
 
 public class BaseActivity extends AppCompatActivity {
+    protected DSApplication app;
     //手指向右滑动时的最小速度
     private static final int XSPEED_MIN = 200;
 
@@ -40,6 +42,7 @@ public class BaseActivity extends AppCompatActivity {
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         //禁止横屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        app = (DSApplication) getApplication();
     }
 
     @Override
