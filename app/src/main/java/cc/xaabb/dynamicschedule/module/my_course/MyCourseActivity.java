@@ -49,6 +49,7 @@ public class MyCourseActivity extends BaseActivity implements SearchView {
     }
 
     private void initView() {
+        mTxtTitle.setText("我的课表");
         mSearchListAdapter = new SearchListAdapter(this);
         mListView.setAdapter(mSearchListAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

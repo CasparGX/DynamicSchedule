@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -215,11 +216,15 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
 
     @Override
     public void uploadSuccess(String shareCode) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        AlertDialog alertDialog = builder.setTitle("分享成功")
+                .setMessage("分享码：" + shareCode).create();
+        alertDialog.show();
 
     }
 
     @Override
     public void uploadFail(String msg) {
-
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 }
