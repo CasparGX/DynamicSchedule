@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
                     transaction.add(R.id.fragment_layout, mHomeFragment);
                 }
                 transaction.show(mHomeFragment);
+                mHomeFragment.setUserVisibleHint(true);
                 break;
             case R.id.action_item3:
                 if (app.getUserModel()!=null && app.getUserModel().getUsername()!=null && !app.getUserModel().getUsername().equals("")) {

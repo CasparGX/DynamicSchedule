@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -29,18 +30,29 @@ public class LocationUtil {
     public LocationUtil(final Context context, final Activity activity) {
         this.activity = activity;
         this.context = context;
+        final DSApplication app = (DSApplication) activity.getApplication();
+        final ACache aCache = ACache.get(context);
+        final Gson gson = new Gson();
+
         listener = new TencentLocationListener() {
             @Override
             public void onLocationChanged(TencentLocation tencentLocation, int error, String s) {
                 if (TencentLocation.ERROR_OK == error) {
                     // 定位成功
                     Log.d(TAG, "定位成功："+tencentLocation.toString());
-                    DSApplication app = (DSApplication) activity.getApplication();
                     app.setLocation(tencentLocation);
+                    String location = gson.toJson(tencentLocation);
+                    aCache.put("location",location);
                     locationManager.removeUpdates(listener);
                 } else {
                     // 定位失败
                     Log.d(TAG, "定位失败: "+s);
+                    String location = aCache.getAsString("location");
+                    if (location!=null) {
+                        Log.d(TAG, "定位失败: 使用缓存城市数据");
+                        TencentLocation tencentLocation1 = gson.fromJson(location, TencentLocation.class);
+                        app.setLocation(tencentLocation1);
+                    }
                 }
                 retryTime++;
                 if (retryTime>5) {

@@ -3,19 +3,17 @@ package cc.xaabb.dynamicschedule.module.home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,19 +21,16 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.xaabb.dynamicschedule.MainActivity;
 import cc.xaabb.dynamicschedule.R;
 import cc.xaabb.dynamicschedule.app.DSApplication;
-import cc.xaabb.dynamicschedule.model.Course;
 import cc.xaabb.dynamicschedule.model.CourseList;
 import cc.xaabb.dynamicschedule.model.ParcelableMap;
 import cc.xaabb.dynamicschedule.module.course_edit.CourseEditListActivity;
+import cc.xaabb.dynamicschedule.module.setup.SetupActivity;
 import cc.xaabb.dynamicschedule.utils.ACache;
 import cc.xaabb.dynamicschedule.widget.course.CourseLayout;
 
@@ -58,7 +53,7 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
     FloatingActionButton mFab3;
     @Bind(R.id.fab_menu)
     FloatingActionsMenu mFabMenu;
-    private String TAG = "MainActivity";
+    private String TAG = "HomeFragment";
     private DSApplication app;
     private Context mContext;
     private Resources mResources;
@@ -89,8 +84,11 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
         mContext = this.getContext();
         app = (DSApplication) getActivity().getApplication();
         mResources = getResources();
-        mACache = ACache.get(getContext());
-        initHeader();
+        if (mACache==null) {
+            mACache = ACache.get(getContext());
+        }
+        initView();
+        Log.d(TAG, "onCreateView: ");
 
 
 
@@ -100,6 +98,7 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: ");
     }
 
     public void refreshCourse() {
@@ -108,9 +107,9 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
         }
     }
 
-    private void initHeader() {
+    private void initView() {
 
-        List<Course> mCourses = new ArrayList<Course>();
+        /*List<Course> mCourses = new ArrayList<Course>();
         for (int i = 0; i < 21; i++) {
 
             Course mCourse = new Course();
@@ -129,8 +128,10 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
             mCourses.add(mCourse);
         }
         MainActivity.setmCurCourseList(mCourses);
+        mLayoutCourse.setCourseList(MainActivity.getmCurCourseList());*/
         mLayoutCourse.setCourseList(MainActivity.getmCurCourseList());
         setSpinner(20);
+        setCurWeek();
     }
 
     private void setSpinner(int length) {
@@ -160,13 +161,17 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            String curWeekStr = mACache.getAsString("curWeek");
-            int curWeek = curWeekStr==null ? 1 : Integer.parseInt(curWeekStr);
-            mCurWeekSpinner.setSelection(curWeek-1);
-            mLayoutCourse.setCurWeek(curWeek);
-            mLayoutCourse.refreshCourse();
+        if (isVisibleToUser && mACache!=null) {
+            setCurWeek();
         }
+    }
+
+    private void setCurWeek() {
+        String curWeekStr = mACache.getAsString("curWeek");
+        int curWeek = curWeekStr==null ? 1 : Integer.parseInt(curWeekStr);
+        mCurWeekSpinner.setSelection(curWeek-1);
+        mLayoutCourse.setCurWeek(curWeek);
+        mLayoutCourse.refreshCourse();
     }
 
     @OnClick({R.id.fab_3, R.id.fab_2, R.id.fab_1})
@@ -197,7 +202,8 @@ public class HomeFragment extends Fragment implements ScheduleUploadView{
                 break;
             case R.id.fab_2:
                 //设置
-
+                mIntent = new Intent(getContext(), SetupActivity.class);
+                startActivity(mIntent);
                 break;
             case R.id.fab_3:
                 //编辑

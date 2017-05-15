@@ -43,6 +43,7 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        mTxtTitle.setText("设置");
         setSpinner(20);
     }
 
@@ -65,9 +66,12 @@ public class SetupActivity extends AppCompatActivity {
         for (a = 0; a < alllength; a++) {
             spinnerData[a] = mResources.getString(R.string.course_no) + (a + 1) + mResources.getString(R.string.course_week);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.item_spinner_course_week2, spinnerData);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.item_spinner_course_week, spinnerData);
         adapter.setDropDownViewResource(R.layout.item_spinner_course_week);
         mCurWeekSpinner.setAdapter(adapter);
+        String curWeek1 = mACache.getAsString("curWeek");
+        int curWeek = curWeek1==null? 0 : Integer.parseInt(curWeek1);
+        mCurWeekSpinner.setSelection(curWeek-1);
     }
     @OnClick({R.id.btn_back})
     public void btnClick(View v) {
