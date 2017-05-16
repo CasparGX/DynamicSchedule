@@ -49,6 +49,8 @@
         </activity>
         <activity android:name=".module.my_course.MyCourseActivity">
         </activity>
+        <activity android:name=".module.about.AboutActivity">
+        </activity>
     </application>
 
 </manifest>

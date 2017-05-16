@@ -15,9 +15,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.xaabb.dynamicschedule.R;
+import cc.xaabb.dynamicschedule.base.BaseActivity;
 import cc.xaabb.dynamicschedule.utils.ACache;
 
-public class SetupActivity extends AppCompatActivity {
+public class SetupActivity extends BaseActivity {
 
 
     @Bind(R.id.btn_back)
